@@ -9,32 +9,37 @@ El objetivo de este manual es guiar a futuros interesados en la instalación de 
 Preparación del Ambiente.
 
 Instalación de apache2
+	Ejecutar: sudo apt-get install apache2
 
-Ejecutar: sudo apt-get install apache2
 Instalación de Mysql.
-Ejecutar: sudo apt-get update
-Ejecutar: sudo apt-get install mysql-server libmysqlclient-dev
-Establecer un usuario y contraseña administrativa para MySQL.
-Establecer el directorio de las bases de datos con el siguiente comando: sudo mysql_install_db
-Instalación de los schemas de manera segura ejecutando: sudo mysql_secure_installation. (Seleccionar qué no a la primera pregunta, sí a todo lo demás).
+	Ejecutar: sudo apt-get update
+	Ejecutar: sudo apt-get install mysql-server libmysqlclient-dev
+	Establecer un usuario y contraseña administrativa para MySQL.
+	Establecer el directorio de las bases de datos con el siguiente comando: sudo mysql_install_db
+	Instalación de los schemas de manera segura ejecutando: sudo mysql_secure_installation. (Seleccionar qué no a la primera pregunta, sí a todo lo demás).
+
 Instalación de pip.
-sudo apt-get install python-pip
+	sudo apt-get install python-pip
+
 Instalacion virtual env.
-Ejecutar: sudo apt-get update
-Ejecutar: sudo pip install virtualenv.
+	Ejecutar: sudo apt-get update
+	Ejecutar: sudo pip install virtualenv.
+
 Copiar la carpeta del Git.
-Acceder al repo.
-Clonar el repo (https://github.com/cesaregm7/megaproyecto) y colocarlo en la carpeta /home/ubuntu.
+	Acceder al repo.
+	Clonar el repo (https://github.com/cesaregm7/megaproyecto) y colocarlo en la carpeta /home/ubuntu.
+
 Instalar requirements
-Estando en la carpeta de Cipa, ingresar al ambiente virtual ejecutando : source CipaEnvirorment/bin/activate
-Instalar requerimientos ejecutando: sudo pip install requirements
-Para salir del ambiente virtual ejecutar: deactivate
+	Estando en la carpeta de Cipa, ingresar al ambiente virtual ejecutando : source CipaEnvirorment/bin/activate
+	Instalar requerimientos ejecutando: sudo pip install requirements
+	Para salir del ambiente virtual ejecutar: deactivate
+
 Configuración de apache2.
-Ingresar a etc/apache2/sites-available.
-Modificar el 000-default-conf agregando al archivo lo siguiente inmediatamente antes de la línea que dice </VirtualHost> :
-	*Ver archivo 000-default.conf en el git
-Nota: Para este paso se asume que la carpeta del proyecto sí se encuentra pegada en /home/ubuntu
-	c. Habilitar el servicio de la página ejecutando: sudo a2ensite 000-default.conf
+	Ingresar a etc/apache2/sites-available.
+	Modificar el 000-default-conf agregando al archivo lo siguiente inmediatamente antes de la línea que dice </VirtualHost> :
+		*Ver archivo 000-default.conf en el git
+		Nota: Para este paso se asume que la carpeta del proyecto sí se encuentra pegada en /home/ubuntu
+	Habilitar el servicio de la página ejecutando: sudo a2ensite 000-default.conf
 
 
 Cargar el backup en la BD.
