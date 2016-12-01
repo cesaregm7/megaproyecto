@@ -7,7 +7,9 @@ El objetivo de este manual es guiar a futuros interesados en la instalación de 
 
 
 Preparación del Ambiente.
+
 Instalación de apache2
+
 Ejecutar: sudo apt-get install apache2
 Instalación de Mysql.
 Ejecutar: sudo apt-get update
