@@ -1,0 +1,19 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block contenido%} 
+{% if user.is_authenticated%}
+<script src="{% static 'scripts/gallery.js' %}" type="text/javascript"></script>
+<div class='div-induccion'>
+<h2 class="modulo-uno-title">INFORMACI&Oacute;N GENERAL</h2>
+<div class="modulo-uno-manager">
+	<div class="mod-uno-container c-one"><button id="prev1" class="btn btn-primary" onClick="prevPhotoM1();" disabled>Anterior</button></div>
+	<div class="mod-uno-container c-two"><a id="iniciar-evaluacion" href="/test_modulo1" class="btn btn-info btn-info-ini" style="visibility:hidden;">Evaluaci&oacute;n</a></div>
+	<div class="mod-uno-container c-three"><button id="next1" class="btn btn-primary" onClick="nextPhotoM1();">Siguiente</button></div>
+</div>
+<div id="g-mod-1" class="modulo-uno-content">
+	<div class='contenedor-temas'><h3 class='titulos-induccion mod-1-bold'>CENTRO INTEGRAL DE PSICOLOGIA APLICADA (CIPA)</h3><div class=''><span class='mod-1-bold'>El Centro Integral de Psicología Aplicada (CIPA)</span>, fue previamente conocido como Centro de Apoyo Integral a la Comunidad (CAIC). Fundado en el año 2002 por iniciativa de la Dra. María Del Pilar Grazioso y el equipo docente de la licenciatura. En el año 2014 luego de un plan de ampliación del centro se le modificó el nombre a CIPA, para brindar servicios en diferentes áreas de la psicología <span class='mod-1-bold'>(Industrial/Organizacional, Neuropsicología, Psicología Comunitaria, Educativa, etc.) y un componente de investigación aplicada en los campos de educación, salud y bienestar integral.</span> Los estudiantes de la Licenciatura en Psicología, Maestría en Consejería Psicológica y Salud Mental, Maestría en Neuropsicología Clínica y Doctorado en Psicología Aplicada pueden realizar sus prácticas profesionales en el Centro.</div></div>
+</div>
+</div>
+{% endif %}	
+{% endblock %}

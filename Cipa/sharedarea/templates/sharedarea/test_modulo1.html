@@ -1,0 +1,127 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block contenido%}
+{% if user.is_authenticated%}
+<div class='div-induccion'>
+<div class="jumbotron">
+	<h2 class="modulo-uno-title">Instrucciones</h2>
+	<p>Para cada pregunta marque la opci&oacute;n correcta.</p>
+</div>
+<div style="padding:0 5%">
+	<form method="POST" action="{% url 'sharedarea:evaluar_test1' %}">
+	{% csrf_token %}
+	<table class="table table-striped table-hover table-custom">
+	  <tbody>
+	    <tr>
+	      <td>1.</td>
+	      <td>¿Qué significan las siglas del Centro?
+		<fieldset>
+		<ul>
+		  <li><input type="radio" name="q1" value="1" /><span class="answer">Centro de Apoyo Integral a la Comunidad</span></li>
+		  <li><input type="radio" name="q1" value="2" /><span class="answer">Centro de Apoyo de Psicología Aplicada</span></li>
+		  <li><input type="radio" name="q1" value="3" /><span class="answer">Centro Integral de Psicología Aplicada</span></li>
+		  <li><input type="radio" name="q1" value="4" /><span class="answer">Centro Integral de Psicología para la Comunidad</span></li>
+		</ul>
+		<fieldset>
+	      </td>
+	    </tr>
+	    <tr>
+	      <td>2.</td>
+	      <td>¿Cuál es el rol de la secretaria del Centro?
+		<fieldset>
+		<ul>
+		  <li><input type="radio" name="q2" value="1" /><span class="answer">Reservar las clínicas y coordinar horarios</span></li>
+		  <li><input type="radio" name="q2" value="2" /><span class="answer">Atender llamadas y archivar expedientes</span></li>
+		  <li><input type="radio" name="q2" value="3" /><span class="answer">Atender estudiantes y docentes</span></li>
+		  <li><input type="radio" name="q2" value="4" /><span class="answer">Todas las anteriores</span></li>
+		</ul>
+		<fieldset>
+	      </td>
+	    </tr>
+	    <tr>
+	      <td>3.</td>
+	      <td>¿Cuáles son los valores del Centro?
+		<fieldset>
+		<ul>
+		  <li><input type="radio" name="q3" value="1" /><span class="answer">Integración, Formación integral, Desarrollo a la vanguardia y Servicio con responsabilidad y ética</span></li>
+		  <li><input type="radio" name="q3" value="2" /><span class="answer">Desarrollo a la vanguardia y Servicio con responsabilidad y ética, Organización, Integración e Innovación</span></li>
+		  <li><input type="radio" name="q3" value="3" /><span class="answer">Disciplina, Honestidad, Rentabilidad y Eficacia</span></li>
+		  <li><input type="radio" name="q3" value="4" /><span class="answer">Formación integral, Compromiso, Desarrollo a la vanguardia y Respeto</span></li>
+		</ul>
+		<fieldset>
+	      </td>
+	    </tr>
+	    <tr>
+	      <td>4.</td>
+	      <td>Como practicante dentro del Centro, debo prestar mi servicios con ética basándome en los principios éticos expresados en:
+		<fieldset>
+		<ul>
+		  <li><input type="radio" name="q4" value="1" /><span class="answer">APA y ACA</span></li>
+		  <li><input type="radio" name="q4" value="2" /><span class="answer">SIP y Código del Colegio de Psicólogos</span></li>
+		  <li><input type="radio" name="q4" value="3" /><span class="answer">a y b son correctas</span></li>
+		  <li><input type="radio" name="q4" value="4" /><span class="answer">Ninguna de las anteriores</span></li>
+		</ul>
+		<fieldset>
+	      </td>
+	    </tr>
+	    <tr>
+	      <td>5.</td>
+	      <td>¿Cuándo se puede compartir la información de un cliente?
+		<fieldset>
+		<ul>
+		  <li><input type="radio" name="q5" value="1" /><span class="answer">Se puede divulgar todo tipo de información a terceras personas, siempre y cuando sea un proceso legal.</span></li>
+		  <li><input type="radio" name="q5" value="2" /><span class="answer">Cuando existe abuso sexual, físico o emocional severo en niños y adultos</span>.</li>
+		  <li><input type="radio" name="q5" value="3" /><span class="answer">Cuando el cliente representa un peligro para sí mismo o para otros.</span></li>
+		  <li><input type="radio" name="q5" value="4" /><span class="answer">Todas las anteriores</span></li>
+		</ul>
+		<fieldset>
+	      </td>
+	    </tr>
+	    <tr>
+	      <td>6.</td>
+	      <td>¿Quiénes son los encargados de prestar los servicios a los clientes del Centro?
+		<fieldset>
+		<ul>
+		  <li><input type="radio" name="q6" value="1" /><span class="answer">Solo estudiantes de la Maestría en Consejería y Salud Mental</span></li>
+		  <li><input type="radio" name="q6" value="2" /><span class="answer">Solo estudiantes de la Licenciatura en Psicología</span></li>
+		  <li><input type="radio" name="q6" value="3" /><span class="answer">a y b son correctas</span></li>
+		  <li><input type="radio" name="q6" value="4" /><span class="answer">Ninguna de las anteriores</span></li>
+		</ul>
+		<fieldset>
+	      </td>
+	    </tr>
+            <tr>
+	      <td>7.</td>
+	      <td>¿En cuanto tiempo se debe de transformar el expediente físico a un archivo digital de un paciente del Centro?
+		<fieldset>
+		<ul>
+		  <li><input type="radio" name="q7" value="1" /><span class="answer">4 años</span></li>
+		  <li><input type="radio" name="q7" value="2" /><span class="answer">5 años</span></li>
+		  <li><input type="radio" name="q7" value="3" /><span class="answer">10 años</span></li>
+		  <li><input type="radio" name="q7" value="4" /><span class="answer">Ninguna de las anteriores</span></li>
+		</ul>
+		<fieldset>
+	      </td>
+	    </tr>
+            <tr>
+	      <td>8.</td>
+	      <td>Se ha reportado que uno de sus casos clínicos sufre de negligencia en el hogar y es un caso legal. El jurado solicita un informe inmediato de parte del practicante. Solo se ha llevado una sesión con él.
+		<fieldset>
+		<ul>
+		  <li><input type="radio" name="q8" value="1" /><span class="answer">Como practicante debo de desligarme del caso y trasladarlo a alguien de Maestría.</span></li>
+		  <li><input type="radio" name="q8" value="2" /><span class="answer">El supervisor debe de tomar el caso y desligarlo del practicante.</span></li>
+		  <li><input type="radio" name="q8" value="3" /><span class="answer">Como practicante realizo un reporte inmediato de la única sesión.</span></li>
+		  <li><input type="radio" name="q8" value="4" /><span class="answer">Como practicante gestionar más sesiones con el paciente antes de realizar el informe.</span></li>
+		</ul>
+		<fieldset>
+	      </td>
+	    </tr>
+	  </tbody>
+	</table>
+	<input class="calificar btn btn-primary" type="Submit" value="Calificar">
+	</form>
+</div>
+</div>
+{% endif %}	
+{% endblock %}

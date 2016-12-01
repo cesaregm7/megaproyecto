@@ -1,0 +1,110 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block  head %} 
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="https://jqueryui.com/resources/demos/style.css">
+  <style>
+  .ui-tabs-vertical { width: 95%; margin:0 auto;}
+  .ui-tabs-vertical .ui-tabs-nav { padding: .2em .1em .2em .2em; float: left; width: 30%; }
+  .ui-tabs-vertical .ui-tabs-nav li { clear: left; width: 100%; border-bottom-width: 1px !important; border-right-width: 0 !important; margin: 0 -1px .2em 0; }
+  .ui-tabs-vertical .ui-tabs-nav li a { display:inline-block; width:inherit; text-align:left; }
+  .ui-tabs-vertical .ui-tabs-nav li.ui-tabs-active { padding-bottom: 0; padding-right: .1em; border-right-width: 1px; }
+  .ui-tabs-vertical .ui-tabs-panel { padding: 1em; float: left; width: 70%; text-align:left;}
+  .ui-tabs-vertical .ui-tabs-panel a {color: #2fa4e7 !important;}
+  </style>
+{% endblock %}
+
+{% block contenido%} 
+{% if user.is_authenticated%}
+<h2 style="margin-top:0; padding-top:15px;">Fichas técnicas</h2>
+<div id="tabs">
+  <ul>
+	{% for type in types%}
+		<li><a href="#tabs-{{ type.id }}">{{ type.text }}</a></li>
+	{% endfor %}
+  </ul>
+  <div id="tabs-1">
+    {% for phgi in phg%}
+		<a href="{{ phgi.link }}" target="_blank">{{ phgi.title }}</a><br/>
+	{% endfor %}
+  </div>
+  <div id="tabs-2">
+    {% for phgnvi in phgnv%}
+		<a href="{{ phgnvi.link }}" target="_blank">{{ phgnvi.title }}</a><br/>
+	{% endfor %}
+  </div>
+  <div id="tabs-3">
+    {% for phpci in phpc%}
+		<a href="{{ phpci.link }}" target="_blank">{{ phpci.title }}</a><br/>
+	{% endfor %}
+  </div>
+  <div id="tabs-4">
+    {% for pdai in pda%}
+		<a href="{{ pdai.link }}" target="_blank">{{ pdai.title }}</a><br/>
+	{% endfor %}
+  </div>
+  <div id="tabs-5">
+    {% for pdvmi in pdvm%}
+		<a href="{{ pdvmi.link }}" target="_blank">{{ pdvmi.title }}</a><br/>
+	{% endfor %}
+  </div>
+  <div id="tabs-6">
+    {% for pdati in pdat%}
+		<a href="{{ pdati.link }}" target="_blank">{{ pdati.title }}</a><br/>
+	{% endfor %}
+  </div>
+  <div id="tabs-7">
+    {% for pdmi in pdm%}
+		<a href="{{ pdmi.link }}" target="_blank">{{ pdmi.title }}</a><br/>
+	{% endfor %}
+  </div>
+  <div id="tabs-8">
+    {% for pdlyli in pdlyl%}
+		<a href="{{ pdlyli.link }}" target="_blank">{{ pdlyli.title }}</a><br/>
+	{% endfor %}
+  </div>
+  <div id="tabs-9">
+    {% for pdpi in pdp%}
+		<a href="{{ pdpi.link }}" target="_blank">{{ pdpi.title }}</a><br/>
+	{% endfor %}
+  </div>
+  <div id="tabs-10">
+    {% for ppi in pp%}
+		<a href="{{ ppi.link }}" target="_blank">{{ ppi.title }}</a><br/>
+	{% endfor %}
+  </div>
+  <div id="tabs-11">
+    {% for pdeddi in pdedd%}
+		<a href="{{ pdeddi.link }}" target="_blank">{{ pdeddi.title }}</a><br/>
+	{% endfor %}
+  </div>
+  <div id="tabs-12">
+    {% for pni in pn%}
+		<a href="{{ pni.link }}" target="_blank">{{ pni.title }}</a><br/>
+	{% endfor %}
+  </div>
+  <div id="tabs-13">
+    {% for iyhdei in iyhde%}
+		<a href="{{ iyhdei.link }}" target="_blank">{{ iyhdei.title }}</a><br/>
+	{% endfor %}
+  </div>
+  <div id="tabs-14">
+    {% for idapi in idap%}
+		<a href="{{ idapi.link }}" target="_blank">{{ idapi.title }}</a><br/>
+	{% endfor %}
+  </div>  
+</div>
+
+{% endif %}	
+{% endblock %}
+
+{% block scripts %} 
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script>
+  $( function() {
+    $( "#tabs" ).tabs().addClass( "ui-tabs-vertical ui-helper-clearfix" );
+    $( "#tabs li" ).removeClass( "ui-corner-top" ).addClass( "ui-corner-left" );
+  } );
+  </script>
+{% endblock %}

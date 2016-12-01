@@ -1,0 +1,82 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block contenido%} 
+{% if user.is_authenticated%}
+<!-- Accordion -->
+<link href="{% static 'styles/jquery-ui.css' %}" rel="stylesheet">
+
+
+<div id="acordion" class="jumbotron" >
+	<br>
+	<h2>Herramientas</h2>
+	{% if user.groups.all.0.name == 'Cliente' %}
+		<div id="accordion">
+			<h3>Expediente</h3>
+			<div>
+				<ul class="nav nav-pills nav-stacked">
+					<li><a href={% url 'healthRecord:record_view_client' f_id=0%}>Formatos de expediente</a></li>
+				</ul>
+			</div>
+			<h3>Recomendaciones</h3>
+			<div>
+				<ul class="nav nav-pills nav-stacked">
+					<li><a href={% url 'documentManager:recomendaciones'%}>Ver todas las recomendaciones</a></li>
+				</ul>
+			</div>
+
+		</div>
+	{% else %}
+		<div id="accordion">
+			<h3>Supervisi&oacute;n y gesti&oacute;n</h3>
+			<div>
+				<ul class="nav nav-pills nav-stacked">
+					<li><a href="/calendario">Calendario de citas</a></li>
+					<li><a href="/induccion">Inducci&oacute;n a CIPA</a></li>
+					<li><a href="/fichas_tecnicas">Consulta de fichas t&eacute;cnicas</a></li>
+					{% if user.groups.all.0.name == 'Administrador' or user.groups.all.0.name == 'Catedrático'%}
+					<li><a href={% url 'userprofile:list_user_profiles'%}>Portafolio de estudiantes</a>
+					{%endif%}</li>
+				</ul>
+			</div>
+			<h3>Expediente</h3>
+			<div>
+				<ul class="nav nav-pills nav-stacked">
+				  <li><a href={% url 'healthRecord:new_record'%}>Ingresar Nuevo Caso</a></li>
+				  {% if user.groups.all.0.name == 'Administrador' or user.groups.all.0.name == 'Catedrático' or user.groups.all.0.name == 'Estudiante'%}
+				  <li><a href={% url 'healthRecord:record_dashboard'%}>Manejo de Expediente</a></li>
+				  {% endif %}
+				  {% if user.groups.all.0.name == 'Administrador'%}
+				  <li><a href={% url 'healthRecord:record_statistics'%}>Estadísticas</a></li>
+				  {% endif %}
+				  
+				  
+				</ul>
+			</div>
+			<h3>Documentos</h3>
+			<div>
+				<ul class="nav nav-pills nav-stacked">
+				  <li><a href={% url 'documentManager:ver_busqueda_documento' search='' %}>Buscar documentos</a></li>
+				  {% if user.groups.all.0.name == 'Administrador' or user.groups.all.0.name == 'Catedrático' %}
+				  <li><a href={% url 'documentManager:subir_documento' %}>Subir documento</a></li>
+				  {% endif %}
+				  {% if user.groups.all.0.name == 'Administrador' %}
+				  <li><a href={% url 'testarea:descargar_test' %}>Descargar resultado de tests educativos</a></li>
+				  {% endif %}
+					<li><a href={% url 'documentManager:recomendaciones'%}>Recomendaciones</a></li>
+				</ul>
+			</div>
+
+		</div>
+	{% endif %}
+</div>
+<script src="{% static 'scripts/jquery.js' %}"></script>
+<script src="{% static 'scripts/jquery-ui.js' %}"></script>
+<script>
+	$( "#accordion" ).accordion({
+		collapsible: true,
+		active: false
+	});
+</script>
+{% endif %}
+{% endblock %}

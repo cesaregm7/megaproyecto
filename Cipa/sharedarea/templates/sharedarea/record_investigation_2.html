@@ -1,0 +1,78 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block head %}
+		<link rel="stylesheet" media="all" type="text/css" href="{% static 'styles/jquery-ui.css' %}" > 
+{% endblock %}
+
+{% block contenido%}
+<div class="container">
+	<div class="row">
+	<div class="col-md-8 col-md-offset-2">
+	<div class="well bs-component">
+		<form method="post" class="form-horizontal" action="{% url 'healthRecord:edit_summary' r=identifier_record r_id=id_record f_id=form_displaying.id_summary_form %}">
+			{% csrf_token %}
+			<fieldset>
+				<legend>
+					Expediente: {{id_record}} <br>
+					{{form_displaying.form_type_id_form_type.name}}<br>
+					{{form_displaying.form_type_id_form_type.code}}
+				</legend>
+				{% for field in form %}
+					{% if not field.errors|length %}
+						<div class="form-group" id="{{ field.name }}">
+					{% else %}
+						<div class="form-group has-error" id="{{ field.name }}">
+					{% endif %}
+						<label class="col-xs-4 control-label">
+						{% if field.name == 'gender' %}
+							Género:
+						{% elif field.name == 'birth_date' %}
+							Fecha de nacimiento:
+						{% elif field.name == 'age' %}
+							Edad:
+						{% elif field.name == 'education' %}
+							Escolaridad:
+						{% elif field.name == 'registration_date' %}
+							Fecha de Registro:
+						{% elif field.name == 'termination_date' %}
+							Fecha de Cierre:
+						{% elif field.name == 'current_status' %}
+							Estatus Actual del Paciente:
+						{% elif field.name == 'service_type' %}
+							Tipo de Servicio:
+						{% elif field.name == 'consultation_reason' %}
+							Motivo de Consulta:
+						{% elif field.name == 'applied_tests' %}
+							Pruebas Aplicadas:
+						{% elif field.name == 'number_sessions' %}
+							Número de Sesiones:
+						{% elif field.name == 'diagnosis' %}
+							Diagnóstico:
+						{% elif field.name == 'referred_by' %}
+							Referido Por/Institución:
+						{% endif %}
+						</label>
+						<div class="col-xs-8">
+							
+							{{field}}
+						</div>
+					</div>
+				{% endfor %}
+				<div class="col-md-4 col-md-offset-4">
+					<a class="btn btn-default" href={% url 'healthRecord:url_record_view' r=identifier_record r_id=id_record f_id=0 %}>Cancelar</a>
+					<input class="btn btn-primary" type="submit" value="Guardar" />
+				</div>
+			</fieldset>
+			
+		</form>
+	</div>
+	</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block scripts%}
+	<script src="{% static 'scripts/jquery-ui.js' %}"></script>
+	<script src="{% static 'scripts/form_utilities.js' %}"></script>
+{% endblock %}

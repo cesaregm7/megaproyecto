@@ -1,0 +1,76 @@
+
+{% load static %}
+
+{% block contenido %}
+{% load thumbnail %}
+
+<div class="container" style="font-family: 'Times New Roman';">
+    <div style="text-align: left;border-bottom: 1px solid;padding-top: 50px;margin: 0 auto;">
+        <div style="display: inline-block; width: 100%">
+            <div style="float:left; width: 50%; display: inline-block;">
+                <h1 style="font-size: 30px; display: inline-block;">{{formUser.first_name.value}} {{formUser.last_name.value}}</h1>
+
+            </div>
+        </div>
+        
+    </div>
+	<div>
+        <br>
+        <br>
+		<table>
+            <tr>
+                <td>
+                    <u><h3 style="margin-left: 30px; font-size: 20px">Información Personal</h3></u>
+                        {% for field in formUser.visible_fields %}
+                            {% if field.label != 'Cita' and field.label != 'Imagen' %}
+                                <div style="margin-left: 50px; margin-bottom: 2px; font-size: 16px;">
+                                    <label style="font-weight: bold;">{{ field.label }}:</label>
+                                    <label style="text-align: left; font-weight: normal; margin-left: 5px">{{ field.value }}</label>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                </td>
+                <td>
+                    {% thumbnail formUser.image_uri.value "200x200" crop="center" as im %}
+                                <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+                            {% endthumbnail %}
+                </td>
+            </tr>
+		</table>
+        <div>
+            <div style="margin-left: 30px">
+                    <u><h3 style="font-size: 20px">Competencias</h3></u>
+                    <table style="font-size: 16px">
+                    <thead>
+                        <tr>
+                            <th style="text-align: center;">#</th>
+                            <th style="text-align: left;">Habilidad</th>
+                            <th style="text-align: left;">Nivel</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for  field in formSkills.visible_fields %}
+                            <tr>
+                                <td style="text-align: center;">{{forloop.counter}}</td>
+                                <td style="text-align: left;">{{field.label}}</td>
+                                {% if field.value == 0 %}
+                                    <td style="text-align: left;">Bajo</td>
+                                {% elif field.value == 1 %}
+                                    <td style="text-align: left;">Regular</td>
+                                {% elif field.value == 2 %}
+                                    <td style="text-align: left;">Bueno</td>
+                                {% elif field.value == 3 %}
+                                    <td style="text-align: left;">Excelente</td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                    </div>
+            </div>
+        </div>
+	</div>
+</div>
+<br>
+
+{% endblock %}

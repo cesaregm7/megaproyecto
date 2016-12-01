@@ -1,0 +1,18 @@
+@media screen and (max-width: 540px) {
+	table{
+		font-size: 2.5vw;
+	}
+	.btn{
+		font-size: 2.5vw;
+	}
+	
+}
+
+.table-row{
+    border-bottom: 1px solid rgb(239,239,239);
+    border-bottom: 1px solid rgba(204,204,204, .5);
+}
+
+p.label-answer{
+	text-align: left !important; 
+}

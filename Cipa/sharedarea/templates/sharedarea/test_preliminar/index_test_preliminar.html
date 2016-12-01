@@ -1,0 +1,147 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block contenido%}
+<div class="container">
+	<div class="row">
+		<div class="text-center">
+			<h2>{{test.name}}</h2>
+		</div>
+	</div> 
+	<br>
+	<div class="row">
+		<div class="col-md-offset-2 col-md-8">
+			<div class="bs-component">
+				<h3>Instrucciones</h3>
+				<p align="justify">{{test.instructions}}</p>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-offset-3 col-lg-6">
+		{% if test.max_val == 5 %}
+		<table class="well table table-bordered table-hover hidden-xs">
+			<tbody>
+				<tr>
+					<th class="text-center"><strong>0</strong></th>
+					<th class="text-center"><strong>1</strong></th>
+					<th class="text-center"><strong>2</strong></th>
+					<th class="text-center"><strong>3</strong></th>
+					<th class="text-center"><strong>4</strong></th>
+				</tr>
+				<tr>
+					<th class="text-center" style="font-weight:normal;">Nunca</th>
+					<th class="text-center" style="font-weight:normal;">Poco Frecuente</th>
+					<th class="text-center" style="font-weight:normal;">Frecuente</th>
+					<th class="text-center" style="font-weight:normal;">Muy Frecuente</th>
+					<th class="text-center" style="font-weight:normal;">Siempre</th>
+				</tr>
+			</tbody>
+		</table>
+		<table class="well table table-bordered table-hover visible-xs">
+			<tbody>
+				<tr>
+					<th class="text-center"><strong>0</strong></th>
+					<th class="text-center" style="font-weight:normal;">Nunca</th>
+				</tr>
+				<tr>
+					<th class="text-center"><strong>1</strong></th>
+					<th class="text-center" style="font-weight:normal;">Poco Frecuente</th>
+				</tr>
+				<tr>
+					<th class="text-center"><strong>2</strong></th>
+					<th class="text-center" style="font-weight:normal;">Frecuente</th>
+				</tr>
+				<tr>
+					<th class="text-center"><strong>3</strong></th>
+					<th class="text-center" style="font-weight:normal;">Muy Frecuente</th>
+				</tr>
+				<tr>
+					<th class="text-center"><strong>4</strong></th>
+					<th class="text-center" style="font-weight:normal;">Siempre</th>
+				</tr>
+			</tbody>
+		</table>
+		{% elif test.max_val == 3 %}
+		<table class="well table table-bordered table-hover hidden-xs">
+			<tbody>
+				<tr>
+					<th class="text-center"><strong>0</strong></th>
+					<th class="text-center"><strong>1</strong></th>
+					<th class="text-center"><strong>2</strong></th>
+
+				</tr>
+				<tr>
+					<th class="text-center">En desacuerdo</th>
+					<th class="text-center">Indiferente</th>
+					<th class="text-center">De acuerdo</th>
+				</tr>
+			</tbody>
+		</table>
+		<table class="well table table-bordered table-hover visible-xs">
+			<tbody>
+				<tr>
+					<th class="text-center"><strong>0</strong></th>
+					<th class="text-center">En desacuerdo</th>
+				</tr>
+				<tr>
+					<th class="text-center"><strong>1</strong></th>
+					<th class="text-center">Indiferente</th>
+				</tr>
+				<tr>
+					<th class="text-center"><strong>2</strong></th>
+					<th class="text-center">De acuerdo</th>
+				</tr>
+			</tbody>
+		</table>
+		{% endif %}
+	</div>
+
+	<div class="row">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th class="col-lg-1 col-md-1 col-sm-1 col-xs-1"><strong>#</strong></th>
+					<th class="col-lg-8 col-md-8 col-sm-6 col-xs-6"><strong>Pregunta</strong></th>
+					<th class="col-lg-3 col-md-3 col-sm-5 col-xs-5"><strong>Respuesta</strong></th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for question in questions %}
+					<tr class="tr-question">
+						<td>{{forloop.counter}}</td>
+						<td class="hidden id-test-question">{{question.id_test_questions}}</td>
+						<td>{{question.question}}</td>
+						<td>
+							<div class="btn-group-justified btn-group-responsive" style="width:100%;">
+								{% for num in questions_range %}
+									<a class="btn btn-default q-{{question.id_test_questions}}">{{num}}</a>
+								{% endfor %}
+							</div>
+						</td>
+					</tr>
+				{% endfor %}	
+			</tbody>
+		</table>
+	</div>
+	<div class="row">
+		<form  id="test_form" action="/test_result" method="post">{% csrf_token %}
+			<input type="hidden" name="test_id" value="{{test.id_test}}">
+			{% for field in form %}
+				{{ field.as_hidden }}
+			{% endfor %}	
+			<div class="form-group">
+		    	<div class="text-center">
+		    		<input type="submit" class="btn btn-primary btn-submit invisible" value="Continuar"></button>
+		    	</div>
+		    </div>
+			
+		</form>
+	</div>
+	<br>
+</div>
+
+{% endblock %}
+{% block scripts%}
+<!--<script src="{% static 'scripts/jquery.js' %}"></script>-->
+<script src="{% static 'scripts/test_handler.js' %}"></script>
+{% endblock %}

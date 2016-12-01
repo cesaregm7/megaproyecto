@@ -1,0 +1,20 @@
+
+.form-control{
+	width: 100%;
+	max-width: 400px;
+}
+
+table{
+	/*font-size: 2.5vw;*/
+}
+
+
+.form-table-container{
+	/*padding: 0 15px;*/
+}
+
+@media screen and (max-width: 540px) {
+	table{
+		font-size: 2.5vw;
+	}
+}

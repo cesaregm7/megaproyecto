@@ -1,0 +1,42 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block contenido%}
+	<div class="container-fluid">
+		<div class="row col-md-offset-2 col-md-8 text-center">
+			<h2>Resultados del test</h2>
+		</div>
+		<div class="row col-md-offset-2 col-md-8 text-justify">
+			<h3>{{test.name}}</h3>
+			<p>{{test.description}}</p>
+		</div>
+		<div class="row col-md-offset-2 col-md-8 text-justify">
+			<h3>Resultado: <strong>{{tipo_riesgo}}</strong></h3>
+			<div class="progress">
+			  <div class="progress-bar" style="width: {{percentage}}%; background-color: {{color}}"></div>
+			</div>
+			<p>{{test_result.resultado}}</p>			
+		</div>
+
+		<div class="row col-md-offset-2 col-md-8 text-justify">
+			<h3>Recomendaciones</h3>
+				<p>
+					{{recomendation.text}}
+				</p>
+			{% if user.is_authenticated %}
+				<p>
+					<form  id="test_form" action="{% url 'documentManager:recomendaciones'%}" method="post">
+						{% csrf_token %}
+						<input type="hidden" name="preselect" value="{{test.id_test}}">
+						<input type="submit" class="btn btn-primary btn-submit" value="Ir a recomendaciones"></button>
+					</form>
+				</p>
+			{% else %}
+				<p><strong>Para tener acceso a todas las recomendaciones debe acercarse a CIPA y hacer una cita.</strong></p>
+			{% endif %}
+		</div>
+
+	</div>
+{% endblock %}
+
+

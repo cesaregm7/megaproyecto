@@ -1,0 +1,78 @@
+
+{% extends 'index.html' %}
+{% load static %}
+{% block head %}
+{% endblock %}
+{% load thumbnail %}
+
+{% block contenido %}
+
+
+<div class="container">
+	<div class="row">
+		<div class="well bs-component">
+			<form method="post" enctype="multipart/form-data" class="form-horizontal" novalidate>{% csrf_token %}
+				<div class="col-lg-5">
+				    <fieldset>
+				    	<legend>Datos del Usuario</legend>
+				        {% for field in formUser.visible_fields %}
+				        	{% if field.label == 'Imagen' %}
+				        		<div class="form-group">
+				                    <label class="col-lg-4 control-label">{{ field.label }}</label>
+				                    <div class="col-lg-8" style="text-align: center">
+				                        {{ field }}
+				                    </div>
+				                </div>
+				        	{% else %}
+					        	<div class="form-group">
+				                    <label class="col-lg-4 control-label">{{ field.label }}</label>
+				                    <div class="col-lg-8">
+				                        {{ field }}
+				                    </div>
+				                </div>
+			                {% endif %}
+				        {% endfor %}
+				        {% for field in formUser.hidden_fields %}
+				        	{{field}}
+				        {% endfor %}
+				    </fieldset>
+				</div>
+				<div class="col-lg-5 col-lg-offset-1">
+				    <fieldset>
+				    	<legend>Habilidades Personales</legend>
+				        {% for field in formSkills.visible_fields %}
+				        	<div class="form-group">
+			                    <label class="col-lg-4 control-label" for="select">{{ field.label }}</label>
+			                    <div class="col-lg-8">
+			                        {{ field }}
+			                    </div>
+			                </div>
+				        {% endfor %}
+				        {% for field in formSkills.hidden_fields %}
+				        	{{field}}
+				        {% endfor %}
+				    </fieldset>
+				</div>
+			    <div class="form-group">
+			      <div class="col-lg-6 col-lg-offset-5 col-xs-6 col-xs-offset-4">
+			    	<input class="btn btn-primary" type="submit" value="Actualizar" />
+			      </div>
+			    </div>
+			</form>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
+
+
+{%block scripts%}
+<script src="{% static 'scripts/jquery-ui.js' %}"></script>
+<script src="{% static 'scripts/moment.min.js' %}"></script>
+<script src="{% static 'scripts/combodate.js' %}"></script> 
+<script type="text/javascript">
+	$(function(){
+	    $('#id_birthdate').combodate();    
+	});
+</script>
+{% endblock %}

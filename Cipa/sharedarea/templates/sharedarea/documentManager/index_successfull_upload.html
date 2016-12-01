@@ -1,0 +1,16 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block contenido%}
+<div class="well text-center">
+	<h1>Archivo subido con exito</h1>
+	<p class="text-center">
+		{{new_file.title}} - {{new_file.author}}
+	</p>
+	<div class="text-center">
+		<a href="{% url 'documentManager:ver_busqueda_documento' search=new_file.title %}" class="btn btn-primary">Buscar documentos</a>
+	</div>
+</div>
+
+
+{% endblock %}

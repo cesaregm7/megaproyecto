@@ -1,0 +1,140 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block head %}
+		<link rel="stylesheet" media="all" type="text/css" href="{% static 'styles/healthRecord_forms.css' %}" >
+		<link rel="stylesheet" media="all" type="text/css" href="{% static 'styles/jquery-ui.css' %}" > 
+{% endblock %}
+
+{% block contenido%}
+<div class="container">
+	<div class="row">
+	<div class="col-md-8 col-md-offset-2">
+	<div class="well bs-component">
+		<form class="form-horizontal"  method="POST" action="{% url 'healthRecord:new_record' %}" onsubmit="return validateForm()">
+			{% csrf_token %}
+			<fieldset>
+				
+				<legend id="nombre_formato">Entrevista Telef&oacute;nica</legend>
+				{% for record_field in record_fields%}
+					{% if record_field.field_type == 0 %}
+						<div class="form-group">
+							<div class="col-xs-8 col-xs-offset-1">
+								<h5>{{record_field.field_name}}:</h5>
+							</div>
+						</div>
+					{% elif record_field.field_type == 1 %}
+						<div class="form-group">
+							<label class="col-xs-4 control-label">{{record_field.field_name}}:</label>
+							<div class="col-xs-8">
+								<input class="form-control" id="{{record_field.field_identifier}}" Name ="{{record_field.field_identifier}}" placeholder="{{record_field.field_placeholder}}" type="text">
+							</div>
+						</div>
+					
+					{% elif record_field.field_type == 2 %}
+						<div class="form-group">
+							<label class="col-xs-4 control-label">{{record_field.field_name}}:</label>
+							<div class="col-xs-8">
+								<input class="form-control" id="{{record_field.field_identifier}}" Name ="{{record_field.field_identifier}}" placeholder="{{record_field.field_placeholder}}" type="number">
+							</div>
+						</div>
+					{% elif record_field.field_type == 4 %}
+						<div class="form-group">
+							<label class="col-xs-4 control-label">{{record_field.field_name}}:</label>
+							<div class="col-xs-8">
+								<input class="form-control date_picker" id="{{record_field.field_identifier}}" Name ="{{record_field.field_identifier}}" placeholder="{{record_field.field_placeholder}}" type="text">
+							</div>
+						</div>
+					{% elif record_field.field_type == 5 %}
+						<div class="form-group">
+							<label class="col-xs-4 control-label">{{record_field.field_name}}:</label>
+							<div class="col-xs-8">
+								<select class="form-control" id="{{record_field.field_identifier}}" Name ="{{record_field.field_identifier}}">
+									<option value="" disabled selected>{{record_field.field_placeholder}}</option>
+								</select>
+							</div>
+						</div>
+						
+					{% elif record_field.field_type == 6 %}
+						<div class="form-group">
+							<label class="col-xs-4 control-label">{{record_field.field_name}}:</label>
+							<div class="col-xs-8">
+								<textarea class="form-control" rows="3" id="{{record_field.field_identifier}}" Name ="{{record_field.field_identifier}}"></textarea>
+
+							</div>
+						</div>
+					{% elif record_field.field_type == 7 %}
+						
+						<div class="form-group">
+							<div class="form-table-container">
+								<label class="col-xs-8 col-xs-offset-2">{{record_field.form_table_name}}</label>
+								{% if record_field.form_table_identifier == 'horario_table' %}
+									<table id="{{record_field.form_table_identifier}}" class="table table-striped table-hover ">
+										<thead>
+											<tr>
+												<th>Día de la semana</th>
+										
+											
+												{% for column in record_field.column_list %}
+													{% if column %}
+														<th>{{column}}</th>
+													{% endif %}
+												{% endfor%}
+											
+											</tr>
+										</thead>
+										<tbody>
+										</tbody>
+									</table>
+								{% endif %}
+							</div>
+						</div>
+					{% endif %}
+					
+					
+				{% endfor %}
+				<div class="form-group">
+					<label class="col-xs-4 control-label">¿Crear un nuevo usuario para el cliente?</label>					
+					
+					<div class="col-xs-8">
+						<div class="radio">
+							<label>
+								<input name="userRadio" id="userRadios1" value="yes" checked="" type="radio">
+								Si
+							</label>
+						</div>
+						<div class="radio">
+							<label>
+								<input name="userRadio" id="userRadios2" value="no" type="radio">
+								No
+							</label>
+						</div>
+					</div>
+					
+				</div>
+				
+				
+				<div class="form-group">
+					<div class="col-md-4 col-md-offset-4">
+						<a class="btn btn-default" href={% url 'sharedarea:herramientas'%}>Cancelar</a>
+						<button type="submit" class="btn btn-primary">Crear</button>
+					</div>
+				</div>
+				
+			</fieldset>
+			
+		</form>
+		
+    </div>
+	</div>
+	</div>
+</div>
+{% endblock %}
+
+{%block scripts%}
+
+<script src="{% static 'scripts/jquery-ui.js' %}"></script>
+	<script src="{% static 'scripts/form_dropdown.js' %}"></script>
+	<script src="{% static 'scripts/form_tables_create.js' %}"></script>
+    <script src="{% static 'scripts/form_utilities.js' %}"></script>
+{% endblock %}

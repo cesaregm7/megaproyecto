@@ -1,0 +1,82 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{% static 'styles/jquery-tagsinput-min.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'styles/jasny-bootstrap.min.css' %}"/>
+{% endblock %}
+{% block contenido%}
+
+<div class="well bs-component col-md-8 col-md-offset-2">
+  <form method="post" class="form-horizontal" enctype="multipart/form-data">
+    {% csrf_token %}
+      <fieldset>
+    	<legend class="text-center">Subir documento</legend>
+		    {% for field in form %}
+		    	{% if field.name == 'title' %}
+		    		<div class="form-group" id="{{ field.name }}">
+						<label class="control-label col-md-offset-1 col-md-3">Titulo</label>
+						<div class="col-lg-6">
+							{{field}}			
+						</div>
+					</div>
+		    	{% elif field.name == 'author' %}
+		    		<div class="form-group row" id="{{ field.name }}">
+						<label class="control-label col-md-offset-1 col-md-3">Autor</label>
+						<div class="col-lg-6">
+							{{field}}			
+						</div>
+					</div>
+		    	{% elif field.name == 'keywords' %}
+		    		<div class="form-group row" id="{{ field.name }}">
+						<label class="control-label col-md-offset-1 col-md-3">Palabras clave</label>
+						<div class="col-lg-6">
+							{{field}}			
+						</div>
+					</div>
+		    	{% elif field.name == 'actual_file' %}
+				<div class="form-group row" id="{{ field.name }}">
+					<label class="control-label col-md-offset-1 col-md-3">Documento</label>
+					<div class="col-md-6">
+						<div class="fileinput fileinput-new input-group" data-provides="fileinput">
+							<div class="form-control" data-trigger="fileinput">
+								<i class="fileinput-exists"></i>
+								<span class="fileinput-filename"></span>
+							</div>
+							<span class="input-group-addon btn btn-primary btn-file" style="color: white;">
+								<span class="fileinput-new">Seleccionar archivo</span>
+								<span class="fileinput-exists">Seleccionar archivo</span>
+								{{field}}
+							</span>
+						</div>
+					</div>
+				</div>
+		    	{% endif%}
+		    {% endfor %}
+    </fieldset>
+	<div class="text-center">
+	    <button class="btn btn-primary"  type="submit">Subir</button>
+	</div>
+  </form>
+</div>
+{% endblock %}
+{% block scripts%}
+	<script src="{% static 'scripts/jquery-tagsinput.min.js' %}"></script>
+	<script src="{% static 'scripts/jasny-bootstrap.min.js' %}"></script>
+	<script type="text/javascript">
+		window.onload = function () 
+		{ 
+			jQuery('#id_keywords').tagsInput({
+				   'height':'',
+				   'width':'100%',
+				   'interactive':true,
+				   'defaultText':'keyword',
+				   'delimiter': [',',';',' '],
+				   'maxChars' : 500, // if not provided there is no limit
+				   'placeholderColor' : '#666666'
+			});
+			jQuery('.tagsinput').addClass('form-control');
+		}
+	
+		jQuery('.fileinput').fileinput();
+	</script>
+{% endblock %}

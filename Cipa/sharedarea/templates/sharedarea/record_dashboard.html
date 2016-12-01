@@ -1,0 +1,167 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block head %}
+		<link rel="stylesheet" media="all" type="text/css" href="{% static 'styles/record_dashboard.css' %}" >
+{% endblock %}
+
+{% block contenido%}
+<div class="container">
+<div class="row">
+	<div class="col-sm-12">
+		<div class="page-header">
+			<h1>Listado Expedientes</h1>
+		</div>
+		<div class="bs-component">
+			<form method="post" class="form-horizontal" action="{% url 'healthRecord:record_dashboard' %}">
+				{% csrf_token %}
+				<div class="col-sm-5">
+					<div class="form-group">
+						<label >Mostrar:</label>
+						<br>
+						<div class="radio_dashboard ocultar_radios">
+							<label>
+							<input name="limit_radio_1" value="true"  type="checkbox" {% if flag1 %} checked="checked" {% endif %}>
+							Psicoterapia
+							</label>
+							<label>
+							<input name="limit_radio_2" value="true" type="checkbox" {% if flag2 %} checked="checked" {% endif %}>
+							Consejer&iacute;a
+							</label>
+							<label>
+							<input name="limit_radio_3" value="true" type="checkbox" {% if flag3 %} checked="checked" {% endif %}>
+							Evaluación Psicol&oacute;gica
+							</label>
+							<label>
+							<input name="limit_radio_4" value="true" type="checkbox" {% if flag4 %} checked="checked" {% endif %}>
+							Evaluación Psicoeducativa
+							</label>
+							<label>
+							<input name="limit_radio_5" value="true" type="checkbox" {% if flag5 %} checked="checked" {% endif %}>
+							Sin Asignar Tipo de Expediente
+							</label>
+							<label>
+							<input name="limit_radio_6" value="true" type="checkbox" {% if flag6 %} checked="checked" {% endif %}>
+							Sin asignar Catedrático
+							</label>
+							<label>
+							<input name="limit_radio_7" value="true" type="checkbox" {% if flag7 %} checked="checked" {% endif %}>
+							Sin Asignar Estudiante
+							</label>
+						</div>
+					</div>
+				</div>
+				
+				
+				<div class="col-sm-5 col-sm-offset-2">
+					<div class="form-group">
+						<label >Ordenar por:</label>
+						<br>
+						<div class="radio_dashboard">
+							
+							<label>
+							<input name="order_radio" value="paciente" type="radio" {% if order == 1 %} checked="checked" {% endif %}>
+							Paciente 
+							</label>
+							<label>
+							<input name="order_radio" value="catedratico"  type="radio" {% if order == 2 %} checked="checked" {% endif %}>
+							Catedrático
+							</label>
+							<label>
+							<input name="order_radio" value="estudiante" type="radio" {% if order == 3 %} checked="checked" {% endif %}>
+							Estudiante
+							</label>
+							<label>
+							<input name="order_radio" value="fecha_desc" type="radio" {% if order == 4 %} checked="checked" {% endif %}>
+							Más Reciente
+							</label>
+							<label>
+							<input name="order_radio" value="fecha_asc" type="radio" {% if order == 5 %} checked="checked" {% endif %}>
+							Más Antiguo
+							</label>
+						</div>
+				
+					</div>
+				</div>
+				
+				
+				<div class="col-sm-6 col-sm-offset-3">
+					<div class="form-group">
+						<input class="form-control" name="key_word" placeholder="Buscar" type="text" value={{palabra}}>
+						
+					</div>
+				</div>
+				<div class="col-sm-2 col-sm-offset-5">
+					<button type="submit" class="btn btn-default">Buscar</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<div class="row">
+<div class="col-xs-12">
+	<br>
+	<br>
+	{% if not records %}
+		<div class="alert alert-dismissible alert-warning col-xs-8 col-sm-offset-2">
+		  <button type="button" class="close" data-dismiss="alert">&times;</button>
+		  <h4>¡Uuuups!</h4>
+		  <p>No se encontraron expedientes.</p>
+		</div>
+	{% else %}
+	<table class="table table-striped table-hover " >
+		
+
+			{% for record in records %}
+				{% if record.professor == None%}
+				<tr class="danger">
+				{% elif record.student == None %}
+				<tr class="warning">
+				{% else %}
+				<tr class="success">
+				{% endif %}
+					<td><b>{{record.my_id}}</b></td>
+					<td><p><b>Paciente:</b> {{record.client_id_client.name}}</p> 
+						<p><b>Estudiante a Cargo:</b> 
+						{% if record.student == None %}
+							Sin Asignar
+						{% else %}
+							{{record.student.first_name}}
+						{% endif %}
+						</p>
+					</td>
+					<td>
+						<p><b>Catedr&aacute;tico a Cargo:</b> 
+						{% if record.professor == None %}
+							Sin Asignar
+						{% else %}
+							{{record.professor.first_name}}
+						{% endif %}
+						</p>
+						<p>
+						<b>Tipo Expediente:</b> 
+						{% if record.record_type == None %}
+							Sin Asignar
+						{% else %}
+							{{record.record_type}}
+						{% endif %}
+						</p>
+					</td>
+					<td>
+						<div class="btn-group-vertical" >
+							<a href={% url 'healthRecord:url_record_view' r=record.id_record r_id=record.my_id f_id=0%} class="btn btn-default">Ver</a>
+							{% if user.groups.all.0.name == 'Administrador' or user.groups.all.0.name == 'Catedrático'%}
+							<a href={% url 'healthRecord:record' r=record.id_record r_id=record.my_id%} class="btn btn-default">Editar Datos Expediente</a>
+							{% endif %}
+						</div>
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	{% endif %}
+</div>
+</div>
+</div>
+
+{% endblock %}

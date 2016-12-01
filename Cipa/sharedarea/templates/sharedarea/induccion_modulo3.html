@@ -1,0 +1,19 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block contenido%} 
+{% if user.is_authenticated%}
+<script src="{% static 'scripts/gallery.js' %}" type="text/javascript"></script>
+<div class='div-induccion'>
+<h2 class="modulo-uno-title">PR&Aacute;CTICA</h2>
+<div class="modulo-uno-manager">
+	<div class="mod-uno-container c-one"><button id="prev3" class="btn btn-primary" onClick="prevPhotoM3();" disabled>Anterior</button></div>
+	<div class="mod-uno-container c-two"><a id="iniciar-evaluacion" href="/test_modulo3" class="btn btn-info btn-info-ini" style="visibility:hidden;">Evaluaci&oacute;n</a></div>
+	<div class="mod-uno-container c-three"><button id="next3" class="btn btn-primary" onClick="nextPhotoM3();">Siguiente</button></div>
+</div>
+<div id='g-mod-3' class="modulo-uno-content">
+	<div class='contenedor-temas'><h3 class='mod-3-bold'>PRÁCTICA CLÍNICA</h3><div class='left-block'><div class=''><h4 class='mod-3-bold'>ASIGNACIÓN DE CLIENTES</h4>Los clientes se contactan con el centro principalmente por vía telefónica, en donde se les hace una <span class='mod-3-bold'>entrevista telefónica</span>. Es allí donde se obtiene la información básica sobre el cliente, motivo de consulta y disponibilidad de horario. Luego se procede a asignar el caso.</div><div class='center-image-induccion'><img src='/static/images/telefono3.PNG' /></div></div><div class='right-block'><div class='center-image-induccion'><img src='/static/images/check3.PNG' /></div><div class=''><h4 class='mod-3-bold'>CONTACTO INICIAL CON EL CLIENTE</h4>En el caso de los estudiantes de la Licenciatura en Psicología, el contacto inicial y la confirmación de cada sesión es realizado por la <span class='mod-3-bold'>secretaria</span> del Centro. En caso de posgrados, lo realiza cada practicante.</div></div></div>
+</div>
+</div>
+{% endif %}	
+{% endblock %}

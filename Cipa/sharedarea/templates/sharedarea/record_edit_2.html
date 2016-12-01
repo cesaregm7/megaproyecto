@@ -1,0 +1,165 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block head %}
+		<link rel="stylesheet" media="all" type="text/css" href="{% static 'styles/healthRecord_forms.css' %}" >
+		<link rel="stylesheet" media="all" type="text/css" href="{% static 'styles/jquery-ui.css' %}" > 
+{% endblock %}
+
+{% block contenido%}
+<div class="container">
+	<div class="row">
+	<div class="col-md-8 col-md-offset-2">
+	<div class="well bs-component">
+		<form method="POST" {% if form_displaying.form_type_id_form_type.id_form_type == 10 %}enctype="multipart/form-data"{% endif %} class="form-horizontal" action="{% url 'healthRecord:record_edit' r=identifier_record r_id=id_record f_id=form_displaying.id_form %}">
+			{% csrf_token %}
+			<fieldset>
+				<legend id="nombre_formato">{{form_displaying.form_type_id_form_type.name}}</legend>
+				{% for field,answer,error in answer_tuple %}
+					{% if field.field_type == 0 %}
+						<div class="form-group">
+							<div class="col-xs-8 col-xs-offset-1">
+								<h3>{{field.field_name}}:</h4>
+							</div>
+						</div>
+					{% elif field.field_type == 8 %}
+						<div class="form-group">
+							<div class="col-xs-8 col-xs-offset-1">
+								<h4>{{field.field_name}}:</h5>
+							</div>
+						</div>
+					{% elif field.field_type == 10 %}
+						<div class="form-group">
+							<div class="col-xs-8 col-xs-offset-1">
+								<h5>{{field.field_name}}:</h5>
+							</div>
+						</div>
+					{% elif field.field_type == 1 %}
+						<div class="form-group">
+							<label class="col-xs-4 control-label">{{field.field_name}}:</label>
+							<div class="col-xs-8">
+								<input class="form-control" id="{{field.field_identifier}}" Name ="{{field.field_identifier}}" placeholder="{{field.field_placeholder}}" value="{{answer}}" type="text">
+							</div>
+						</div>
+					
+					{% elif field.field_type == 2 %}
+						{% if error != "" %}
+						<div class="form-group has-error">
+						{% else %}
+						<div class="form-group">
+						{% endif %}
+							<label class="col-xs-4 control-label">{{field.field_name}}:</label>
+							<div class="col-xs-8">
+								<input class="form-control" id="{{field.field_identifier}}" Name ="{{field.field_identifier}}" placeholder="{{field.field_placeholder}}" value="{{answer}}"  type="number">
+							</div>
+						</div>
+					{% elif field.field_type == 4 %}
+						{% if error != "" %}
+						<div class="form-group has-error">
+						{% else %}
+						<div class="form-group">
+						{% endif %}
+							<label class="col-xs-4 control-label">{{field.field_name}}:</label>
+							<div class="col-xs-8">
+								<input class="form-control date_picker" id="{{field.field_identifier}}" Name ="{{field.field_identifier}}" placeholder="{{field.field_placeholder}}" value="{{answer}}" type="text">
+							</div>
+						</div>
+					{% elif field.field_type == 5 %}
+						<div class="form-group">
+							<label class="col-xs-4 control-label">{{field.field_name}}:</label>
+							<div class="col-xs-8">
+								<select class="form-control" id="{{field.field_identifier}}" Name ="{{field.field_identifier}}">
+									<option value="{{answer}}" disabled selected>{% if answer != None %}{{answer}}{% endif %}</option>
+								</select>
+							</div>
+						</div>
+						
+					{% elif field.field_type == 6 or field.field_type == 11 %}
+						<div class="form-group">
+							<label class="col-xs-4 control-label">{{field.field_name}}:</label>
+							<div class="col-xs-8">
+								<textarea class="form-control" rows="6" id="{{field.field_identifier}}" value="{{answer}}" Name ="{{field.field_identifier}}" placeholder="{{field.field_placeholder}}">{{answer}}</textarea>
+
+							</div>
+						</div>
+						
+					{% elif field.field_type == 12 %}
+						{% if error != "" %}
+						<div class="form-group has-error">
+						{% else %}
+						<div class="form-group">
+						{% endif %}
+							<label class="col-xs-4 control-label">{{field.field_name}}:</label>
+							<div class="col-xs-8">
+								<input class="control-label" id="{{field.field_identifier}}" Name ="{{field.field_identifier}}" type="file">
+
+							</div>
+						</div>	
+						
+					{% elif field.field_type == 7 or field.field_type == 9%}
+						
+						<div class="form-group">
+							<div class="form-table-container">
+								<label class="col-xs-8 col-xs-offset-2">{{field.form_table_name}}</label>
+								<table id="{{field.form_table_identifier}}" class="table table-striped table-hover ">
+									<thead>
+										<tr>
+											{% if field.field_type == 7 %}
+												<th id="{{field.form_table_identifier}}_text_space"></th>
+											{% elif field.field_type == 9 %}
+												<input type="hidden" id="filas_{{field.form_table_identifier}}" name="filas_{{field.form_table_identifier}}" value="{{ answer|length }}">
+											{% endif %}
+											
+											{% for column in field.column_list %}
+												{% if column %}
+													<th>{{column}}</th>
+												{% endif %}
+											{% endfor%}
+										</tr>
+									</thead>
+									<body>
+										{% for elem in answer %}
+											<tr>
+												{% if field.field_type == 7 %}
+													<td id="{{field.form_table_identifier}}_first_col_{{forloop.counter}}"></td>
+												{% endif %}
+												{% for sub_elem in elem %}
+													<td>
+														<input name="{{field.form_table_identifier}}_col_{{forloop.parentloop.counter}}_{{forloop.counter}}" type="text" class="form-control" value="{{sub_elem}}"/>
+													</td>
+												{% endfor %}
+											</tr>
+										{% endfor %}
+									</body>
+								</table>
+							</div>
+						</div>
+					{% endif %}
+					
+					
+				{% endfor %}
+				<div class="form-group">
+					<div class="col-md-4 col-md-offset-4">
+						<a class="btn btn-default" href={% url 'healthRecord:url_record_view' r=identifier_record r_id=id_record f_id=form_displaying.id_form%}>Cancelar</a>
+						<button type="submit" class="btn btn-primary">Guardar</button>
+					</div>
+				</div>
+				
+			</fieldset>
+			
+		</form>
+		
+    </div>
+	</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+	<script src="{% static 'scripts/jquery-ui.js' %}"></script>
+	<script src="{% static 'scripts/form_dropdown.js' %}"></script>
+    <script src="{% static 'scripts/form_utilities.js' %}"></script>
+    <script src="{% static 'scripts/form_tables.js' %}"></script>
+    <script src="{% static 'scripts/form_tables_2.js' %}"></script>
+    
+{% endblock %}

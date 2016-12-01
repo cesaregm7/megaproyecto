@@ -1,0 +1,24 @@
+{% load static %}
+<html>
+	<head>
+		<title>Certificación de finalización de inducción</title>
+		<link rel="stylesheet" media="all" type="text/css" href="{% static 'styles/diploma.css' %}" >
+	</head>
+	<body>
+		<div class="marco-exterior">
+			<div class="marco-interior">
+				<div class='contenedor-logos'>
+					<img src='/static/images/CIPA-logo.png' width='150px' style='float:left;margin-left:50px; margin-top:20px;'/>
+					<img src='/static/images/Logo-UVG-Colores.png' width='70px' style='float:right;margin-right:55px'/>
+				</div>
+				<br />
+				<h1>CERTIFICADO DE FINALIZACI&Oacute;N INDUCCI&Oacute;N</h1>
+				<br/>
+				<br/>
+				<p style='text-align:justify;'>El Departamento de Psicolog&iacute;a y el Centro Integral de Psicolog&iacute;a Aplicada (CIPA), certifica que {{ user.first_name }} {{ user.last_name }} ha finalizado con &eacute;xito el tutorial de inducci&oacute;n para el manejo de pacientes cl&iacute;nicos y educativos del &aacute;rea de psicolog&iacute;a.</p>
+			<p><span>Fecha de finalizaci&oacute;n: </span><span>{{ induccion.approved_date }}</span></p>
+			<p><span>N&uacute;mero de certificaci&oacute;n: </span><span>{{ user.pk }}</span></p>
+			</div> 	
+		</div> 
+	</body>
+</html>

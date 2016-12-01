@@ -1,0 +1,59 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block contenido%}
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-6 col-lg-offset-4 col-xs-8 col-xs-offset-2">
+				<h2>Área Organizacional</h2>
+			</div>
+		</div> 
+		<br>
+		<div class="row">
+			<div class="col-lg-8 col-lg-offset-2 col-xs-10 col-xs-offset-1">
+				<a href="#">
+					<img class="img-responsive" src="{% static 'images/servicio_organizacional.jpg' %}" alt="Servicio" />
+				</a>
+			</div>
+		</div> 
+		<br>
+		<div class="row">
+			<div class="col-lg-10 col-lg-offset-1 col-xs-10 col-xs-offset-1">
+				<p align="justify">
+  					El Centro de Psicolog&iacute;a Aplicada (CIPA)  ofrece servicios para mejorar el ambiente dentro de las organizaciones y es por esto que a continuaci&oacute;n se ofrecen unas escalas de an&aacute;lisis en las que se realiza un screening para determinar las &aacute;reas de mejora dentro de su organizaci&oacute;n. 
+				</p>
+			</div>
+		</div>
+		<br>
+		<table class="table table-striped table-hover">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>Tema</th>
+					<th>Descripci&oacute;n</th>
+					<th>Estado</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="info">
+					<td>1</td>
+					<td>Acoso Laboral</td>
+					<td>Situaci&oacute;n en la que un trabajador ejerce presi&oacute;n sobre otro con el fin de destruir su reputaci&oacute;n dentro de una empresa.</td>
+					<td><a href={% url 'testarea:consentimiento_test_preliminar' test=1 %} %}  class="btn btn-default">Iniciar</a></td>
+				</tr>
+				<tr class="success">
+					<td>2</td>
+					<td>Clima Laboral</td>
+					<td>Es el ambiente que se vive en el trabajo d&iacute;a a d&iacute;a y que influye en la productividad de la persona.</td>
+					<td><a href={% url 'testarea:consentimiento_test_preliminar' test=2 %} %} class="btn btn-default">Iniciar</a></td>
+				</tr>
+				<tr class="warning">
+					<td>3</td>
+					<td>Desgaste laboral</td>
+					<td>Es un s&iacute;ndrome que se caracteriza por cansancio extremo, cinismo y falta de realizaci&oacute;n personal.</td>
+					<td><a href={% url 'testarea:consentimiento_test_preliminar' test=3 %} class="btn btn-default">Iniciar</a></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block head %}
+{% endblock %}
+
+
+{% block contenido %}
+
+<div class="col-md-8 col-md-offset-2">
+<div class="well bs-component">
+<form method="post" class="form-horizontal" action="{% url 'testarea:test_preliminar' test=test_id %}" lang="es">
+	{% csrf_token %}
+    <fieldset>
+        <legend>Datos Generales</legend>
+        {% for field in form %}
+			{% if field.name == 'age' %}
+				<div class="form-group" id="{{ field.name }}">
+					<div class="col-lg-4 control-label">
+						<label>Edad</label>
+					</div>
+					<div class="col-lg-8">
+						{{field}}			
+					</div>
+				</div>
+			{% elif field.name == 'gender' %}
+				<div class="form-group" id="{{ field.name }}">
+					<div class="col-lg-4 control-label">
+						<label>Genero</label>
+					</div>
+					<div class="col-lg-8">
+						{{field}}			
+					</div>
+				</div>
+			{% elif field.name == 'relationship' %}
+				<div class="form-group" id="{{ field.name }}">
+					<div class="col-lg-4 control-label">
+						<label>Relación con el niño</label>
+					</div>
+					<div class="col-lg-8">
+						{{field}}			
+					</div>
+				</div>
+			{% endif%}
+		{% endfor %}
+
+    </fieldset>
+    <div class="form-group">
+      <div class="text-center">
+    	<input class="btn btn-primary" type="submit" value="Enviar"/>
+      </div>
+    </div>
+</form>
+
+</div>
+</div>
+{% endblock %}

@@ -1,0 +1,38 @@
+.marco-exterior{
+	width: 700px;
+        height: 500px;
+	background: #7dc77d;
+	margin: 0 auto;
+	padding-top:45px;
+	box-sizing:border-box;
+}
+
+.marco-interior{
+	width: 610px;
+    height: 410px;
+	margin: 0 auto;
+	background: white;
+	padding-top:50px;
+	text-align:center;
+	box-sizing:border-box;
+}
+
+.contenedor-logos{
+	width:100%;
+	display:inline-block;
+}
+
+h1{
+	margin:0;
+	font-size:28px;
+	text-align: center;
+	display:inline-block;
+	width:400px;
+}
+
+p{
+	text-align: center;
+	display:inline-block;
+	width:450px;
+	margin: 10px auto;
+}

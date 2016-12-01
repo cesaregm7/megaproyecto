@@ -1,0 +1,49 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block contenido%}
+<div class="container">
+	<div class="row">
+		<div class="col-lg-6 col-lg-offset-4 col-xs-8 col-xs-offset-2">
+			<h2>Consentimiento Informado</h2>
+		</div>
+	</div> 
+	<br>
+	<div class="well bs-component">
+	<div class="row">
+		<div class="col-lg-8 col-lg-offset-2 col-xs-10 col-xs-offset-1">
+			<p align="justify">
+				El prop&oacute;sito de esta escala de an&aacute;lisis es determinar las &aacute;reas de mejora dentro de la organizaci&oacute;n, incrementando su bienestar y satisfacci&oacute;n.
+			</p>
+
+			<p align="justify">
+				Toma un tiempo aproximado de 10 minutos y puede retirarse en cualquier momento sin que esto lo perjudique de alguna manera. La siguiente escala es solo una screening para evaluar &aacute;reas de mejora y no es una evaluaci&oacute;n formal. La informaci&oacute;n que se recoja ser&aacute; confidencial y no se usar&aacute; para ningún otro propósito. 
+			</p>
+
+
+			<p align="justify">
+				Se le pedir&aacute; que conteste con honestidad a lo largo de la misma para poder obtener resultados m&aacute;s confiables; de igual manera su participaci&oacute;n en la misma es estrictamente voluntaria.  
+			</p>
+
+
+			<p align="justify">
+				Acepto participar voluntariamente en la encuesta, conducida por el Centro Integral de Psicología Aplicada avalado por la Universidad del Valle de Guatemala. He sido informado(a) de que la meta de esta escala de análisis es para brindar un screening en distintas áreas. 
+			</p>
+		</div>
+	</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-1 col-lg-offset-4 col-xs-1 col-xs-offset-3">
+			<form name="access_formulario" method="post" action="{% url 'testarea:formulario_general' test=test_id %}">
+				{% csrf_token %}	
+				<input class="btn btn-primary" type="submit" value="Continuar"/>
+			</form>
+		</div>
+		<div class="col-lg-1 col-xs-1 col-xs-offset-2">
+			<a href="{% url 'sharedarea:organizaciones' %}" class="btn btn-default">Regresar</a>
+		</div>
+	</div>
+	<br>
+</div>
+
+{% endblock %}

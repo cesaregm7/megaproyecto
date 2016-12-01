@@ -1,0 +1,135 @@
+INFO  2016-10-09 15:04:30,060 [main] org.mule.module.launcher.MuleContainer: 
+**********************************************************************
+* Mule Runtime and Integration Platform                              *
+* Version: 3.8.1 Build: f246ae87                                     *
+* MuleSoft, Inc.                                                     *
+* For more information go to                                         *
+* http://www.mulesoft.com/mule-esb-enterprise                        *
+*                                                                    *
+* Server started: 10/9/16 3:04 PM                                    *
+* JDK: 1.8.0_91 (mixed mode)                                         *
+* OS: Windows 10 -  (10.0, amd64)                                    *
+* Host: Pablo-laptop (192.168.56.1)                                  *
+* Mule system properties:                                            *
+* - mule.plugins.dir =                                               *
+* C:\Users\PabloJavier\Desktop\AnypointStudio\plugins\org.mule.tooli *
+* ng.server.3.8.1.ee_6.1.1.201609121705\mule\plugins                 *
+*  - mule.forceConsoleLog =                                          *
+*  - mule.home = C:\Users\PabloJavier\AnypointStudio\workspace\.mule *
+*  - mule.verbose.exceptions = true                                  *
+*  - mule.agent.enabled = false                                      *
+**********************************************************************
+INFO  2016-10-09 15:04:30,494 [main] org.mule.module.launcher.coreextension.DefaultMuleCoreExtensionManager: Initializing core extensions
+INFO  2016-10-09 15:04:30,807 [main] com.mulesoft.mule.cluster.hazelcast.config.ClusterTicketFileLoader: C:\Users\PabloJavier\AnypointStudio\workspace\.mule\.mule\mule-cluster.properties (The system cannot find the file specified)
+WARN  2016-10-09 15:04:30,896 [main] com.mulesoft.mule.cluster.boot.ClusterCoreExtension: No cluster ID was specified -- High Availability will be disabled:
+INFO  2016-10-09 15:04:30,967 [main] com.mulesoft.module.policies.PoliciesCoreExtension: Starting API policies Extension in STANDALONE mode
+INFO  2016-10-09 15:04:31,136 [main] com.mulesoft.mmc.agent.AgentCoreExtension: Mule Agent Core Extension is DISABLED
+WARN  2016-10-09 15:04:31,365 [main] com.mulesoft.analytics.AnalyticsCache: There was an error attempting to open analytics event queue. Resetting queue to its factory settings. Reason: java.io.IOException: Wrong index checksum, store was not closed properly and could be corrupted.
+WARN  2016-10-09 15:04:32,026 [main] com.mulesoft.analytics.AnalyticsCache: There was an error attempting to open analytics event queue. Resetting queue to its factory settings. Reason: java.io.IOException: Wrong index checksum, store was not closed properly and could be corrupted.
+INFO  2016-10-09 15:04:32,629 [main] com.mulesoft.mule.plugin.manager.MulePluginManager: Registering plugin: data-mapper-plugin
+INFO  2016-10-09 15:04:32,697 [main] com.mulesoft.mule.plugin.manager.MulePluginManager: Registering plugin: mule-plugin-debugger-3.8.1
+INFO  2016-10-09 15:04:32,747 [main] com.mulesoft.mule.plugin.manager.MulePluginManager: Registering plugin: mule-plugin-weave-3.8.1-dist
+INFO  2016-10-09 15:04:32,772 [main] org.mule.module.launcher.coreextension.DefaultMuleCoreExtensionManager: Starting core extensions
+INFO  2016-10-09 15:04:32,802 [main] com.mulesoft.mule.plugin.manager.MulePluginManager: Starting plugin: mule-plugin-weave-3.8.1-dist
+INFO  2016-10-09 15:04:32,802 [main] com.mulesoft.mule.plugin.manager.MulePluginManager: Starting plugin: data-mapper-plugin
+INFO  2016-10-09 15:04:32,836 [main] org.mule.module.launcher.DefaultArchiveDeployer: ================== New Exploded Artifact: default
+INFO  2016-10-09 15:04:32,840 [main] org.mule.module.launcher.MuleSharedDomainClassLoader: Using domain dir C:\Users\PabloJavier\AnypointStudio\workspace\.mule\domains\default for domain default
+INFO  2016-10-09 15:04:32,912 [main] org.mule.module.launcher.MuleDeploymentService: 
+**********************************************************************
+* Started domain 'default'                                           *
+**********************************************************************
+INFO  2016-10-09 15:04:32,918 [main] org.mule.module.launcher.ArtifactArchiveInstaller: Exploding a Mule artifact archive: file:/C:/Users/PabloJavier/AnypointStudio/workspace/.mule/apps/mule-example.zip
+INFO  2016-10-09 15:04:32,910 [main] org.mule.module.launcher.domain.DefaultMuleDomain: 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ New domain 'default'                                     +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+INFO  2016-10-09 15:04:32,911 [main] org.mule.module.launcher.domain.DefaultMuleDomain: 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Initializing domain 'default'                            +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+INFO  2016-10-09 15:04:35,542 [main] org.mule.module.launcher.application.DefaultMuleApplication: 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ New app 'mule-example'                                   +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+INFO  2016-10-09 15:04:37,322 [main] org.mule.module.launcher.application.DefaultMuleApplication: 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Initializing app 'mule-example'                          +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+WARN  2016-10-09 15:04:37,831 [main] com.mulesoft.module.client.APIPlatformClientCoreExtension: Client ID or Client Secret were not provided. API Manager client is DISABLED for app mule-example
+INFO  2016-10-09 15:04:37,877 [main] org.mule.lifecycle.AbstractLifecycleManager: Initialising RegistryBroker
+INFO  2016-10-09 15:04:38,177 [main] org.mule.module.extension.internal.manager.DefaultExtensionManager: Starting discovery of extensions
+INFO  2016-10-09 15:04:38,572 [main] org.mule.module.extension.internal.manager.DefaultExtensionManager: Discovered 1 extensions
+INFO  2016-10-09 15:04:38,572 [main] org.mule.module.extension.internal.manager.DefaultExtensionManager: Registering extension validation (version 3.8)
+INFO  2016-10-09 15:04:38,782 [main] org.mule.config.spring.MuleArtifactContext: Refreshing org.mule.config.spring.MuleArtifactContext@3605c4d3: startup date [Sun Oct 09 15:04:38 CST 2016]; root of context hierarchy
+SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+INFO  2016-10-09 15:04:41,952 [main] org.mule.config.spring.processors.NoDevkitInjectorProcessor: JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+WARN  2016-10-09 15:04:44,260 [main] org.mule.security.oauth.callback.DefaultHttpCallbackAdapter: Environment variable 'http.port' not found, using default localPort: 8080
+INFO  2016-10-09 15:04:44,260 [main] org.mule.security.oauth.callback.DefaultHttpCallbackAdapter: Using default remotePort: 80
+WARN  2016-10-09 15:04:44,260 [main] org.mule.security.oauth.callback.DefaultHttpCallbackAdapter: Environment variable 'fullDomain' not found, using default: localhost
+WARN  2016-10-09 15:04:45,124 [main] org.mule.module.ognl.expression.OgnlExpressionEvaluator: OGNL module is deprecated and will be removed in Mule 4.0. Use MEL expressions instead.
+INFO  2016-10-09 15:04:45,388 [main] org.mule.util.journal.TransactionJournal: Using files for tx logs C:\Users\PabloJavier\AnypointStudio\workspace\.mule\.\.mule\mule-example\queue-tx-log\tx1.log and C:\Users\PabloJavier\AnypointStudio\workspace\.mule\.\.mule\mule-example\queue-tx-log\tx2.log
+INFO  2016-10-09 15:04:45,411 [main] org.mule.util.journal.TransactionJournal: Using files for tx logs C:\Users\PabloJavier\AnypointStudio\workspace\.mule\.\.mule\mule-example\queue-xa-tx-log\tx1.log and C:\Users\PabloJavier\AnypointStudio\workspace\.mule\.\.mule\mule-example\queue-xa-tx-log\tx2.log
+INFO  2016-10-09 15:04:45,683 [main] org.mule.lifecycle.AbstractLifecycleManager: Initialising model: _muleSystemModel
+INFO  2016-10-09 15:04:45,688 [main] org.mule.construct.FlowConstructLifecycleManager: Initialising flow: mule-example-flujo
+INFO  2016-10-09 15:04:45,688 [main] org.mule.exception.DefaultMessagingExceptionStrategy: Initialising exception listener: org.mule.exception.DefaultMessagingExceptionStrategy@5382184b
+INFO  2016-10-09 15:04:45,759 [main] org.mule.processor.SedaStageLifecycleManager: Initialising service: mule-example-flujo.stage1
+INFO  2016-10-09 15:04:46,651 [main] org.mule.config.spring.SpringXmlConfigurationBuilder: Configured Mule using "org.mule.config.spring.SpringXmlConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='C:\Users\PabloJavier\AnypointStudio\workspace\.mule\apps\mule-example\mule-example.xml'}]"
+INFO  2016-10-09 15:04:46,652 [main] org.mule.config.builders.AutoConfigurationBuilder: Configured Mule using "org.mule.config.builders.AutoConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='C:\Users\PabloJavier\AnypointStudio\workspace\.mule\apps\mule-example\mule-example.xml'}]"
+INFO  2016-10-09 15:04:46,720 [main] org.mule.module.launcher.application.DefaultMuleApplication: 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Starting app 'mule-example'                              +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+INFO  2016-10-09 15:04:46,723 [main] org.mule.util.queue.QueueXaResourceManager: Starting ResourceManager
+INFO  2016-10-09 15:04:46,724 [main] org.mule.util.queue.QueueXaResourceManager: Started ResourceManager
+INFO  2016-10-09 15:04:46,762 [main] org.mule.modules.oauth2.provider.agents.DefaultSplashScreenAgent: 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ DevKit Extensions (1) used in this application 
+Slack 1.0.0 (DevKit 3.6.1    +
++ Build UNNAMED.2405.44720b7)+
+                                                +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+INFO  2016-10-09 15:04:46,763 [main] org.mule.lifecycle.AbstractLifecycleManager: Starting model: _muleSystemModel
+INFO  2016-10-09 15:04:46,765 [main] org.mule.construct.FlowConstructLifecycleManager: Starting flow: mule-example-flujo
+INFO  2016-10-09 15:04:46,765 [main] org.mule.processor.SedaStageLifecycleManager: Starting service: mule-example-flujo.stage1
+INFO  2016-10-09 15:04:46,967 [main] org.mule.module.management.agent.WrapperManagerAgent: This JVM hasn't been launched by the wrapper, the agent will not run.
+INFO  2016-10-09 15:04:49,007 [Receiving Thread] org.mule.modules.slack.SlackConnector: Started retrieving messages of channel: general!
+INFO  2016-10-09 15:04:51,622 [main] org.mule.DefaultMuleContext: 
+**********************************************************************
+* Application: mule-example                                          *
+* OS encoding: \, Mule encoding: UTF-8                               *
+*                                                                    *
+* Agents Running:                                                    *
+*   JMX Agent                                                        *
+*   Batch module default engine                                      *
+*   DevKit Extension Information                                     *
+*   Wrapper Manager                                                  *
+**********************************************************************
+INFO  2016-10-09 15:04:51,622 [main] org.mule.module.launcher.MuleDeploymentService: 
+**********************************************************************
+* Started app 'mule-example'                                         *
+* Application plugins:                                               *
+*  - mule-module-facebook-2.3.4                                      *
+*  - slack-connector-1.0.0                                           *
+*  - mule-module-twitter-4.0.0                                       *
+**********************************************************************
+INFO  2016-10-09 15:04:51,706 [main] org.mule.module.launcher.DeploymentDirectoryWatcher: 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Mule is up and kicking (every 5000ms)                    +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+INFO  2016-10-09 15:04:51,718 [main] org.mule.module.launcher.StartupSummaryDeploymentListener: 
+**********************************************************************
+*              - - + DOMAIN + - -               * - - + STATUS + - - *
+**********************************************************************
+* default                                       * DEPLOYED           *
+**********************************************************************
+
+*******************************************************************************************************
+*            - - + APPLICATION + - -            *       - - + DOMAIN + - -       * - - + STATUS + - - *
+*******************************************************************************************************
+* mule-example                                  * default                        * DEPLOYED           *
+*******************************************************************************************************
+
+INFO  2016-10-09 15:08:30,197 [[mule-example].mule-example-flujo.stage1.02] com.mulesoft.weave.mule.utils.MuleWeaveFactory$: MimeType was not resolved '*/*' delegating to Java.
+INFO  2016-10-09 15:08:30,197 [[mule-example].mule-example-flujo.stage1.03] com.mulesoft.weave.mule.utils.MuleWeaveFactory$: MimeType was not resolved '*/*' delegating to Java.

@@ -1,0 +1,55 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block contenido%}
+<div class="container-fluid">
+	<div class="well bs-component col-md-6 col-md-offset-3 text-center">
+		<form method="post" class="form-inline">
+			{% csrf_token %}
+			<fieldset>
+				<div class="row">
+					<label class="control-label">Busqueda:</label>
+					{{search_form.search}}
+					<input class="btn btn-primary" type="submit" value="Buscar"/>
+
+					<label>Buscar en:</label>
+					<label>Autor {{search_form.author}}</label>								
+					<label>Titulo {{search_form.title}}</label>
+				</div>
+			</fieldset>
+		</form>
+	</div>
+</div>
+
+<div class="well bs-component col-md-8 col-md-offset-2 text-center">
+	<table class="table table-striped table-hover">
+		<thead>
+			<tr>
+			  <th>#</th>
+			  <th class="text-center"> Documento</th>
+			  <th class="text-center">Autor</th>
+			</tr>
+		  </thead>
+		  <tbody>
+			{% for doc in docs %}
+				<tr class="clickable-row" data-href="{{doc.link}}">
+					<td class="col-xs-1">{{forloop.counter}}</td>
+					<td class="col-sm-6 col-xs-6">{{doc.title}}</td>
+					<td class="col-sm-5 col-xs-6">{{doc.author}}</td>
+				</tr>
+			{% endfor %}	
+		  </tbody>
+		</table>
+</div>
+{% endblock %}
+
+{% block scripts %}
+	<script>
+jQuery(document).ready(function($) {
+    $(".clickable-row").click(function() {
+		window.open($(this).data("href"));
+        //window.document.location = $(this).data("href");
+    });
+});
+	</script>
+{% endblock %}

@@ -1,0 +1,34 @@
+
+.descripcion-wrapper{
+	text-align: justify;
+}
+
+
+@media (max-width: 600px){
+	.form-group{
+		height: 120px;
+	}
+	#name, #last_name, #age{
+		height: 60px;
+	}
+
+	.label-wrapper{
+		text-align: center;
+		width: 100%;
+	}
+	.input-wrapper{
+		margin: 0 auto;
+		float:none;
+		height: 200px;
+	}
+	#id_education, #id_gender, #id_marital_status,
+	#id_working_time, #id_organization_size, #id_organization_type{
+		display: block;
+		float:none;
+		width: 100%;
+	}
+	.form-group li{
+		width: 100%;
+	}
+
+}

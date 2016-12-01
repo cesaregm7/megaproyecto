@@ -1,0 +1,137 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block  head %} 
+{% endblock %}
+
+{% block contenido%} 
+{% if user.is_authenticated%}
+<!-- Accordion -->
+<link href="{% static 'styles/jquery-ui.css' %}" rel="stylesheet">
+
+<div id="acordion" class="jumbotron" >
+  <h2 class='fichas-tecnicas'>Fichas técnicas</h2>  
+  <div id="accordion">
+  <h3>{{ types.0.text }}</h3>
+  <div class='accordion-carpets'>
+    <ul class="nav nav-pills nav-stacked">
+    {% for phgi in phg%}
+		<li><a href="{{ phgi.link }}" target="_blank">{{ phgi.title }}</a></li>
+    {% endfor %}
+    </ul>
+  </div>
+  <h3>{{ types.1.text }}</h3>
+  <div class='accordion-carpets'>
+    <ul class="nav nav-pills nav-stacked">
+    {% for phgnvi in phgnv%}
+		<li><a href="{{ phgnvi.link }}" target="_blank">{{ phgnvi.title }}</a></li>
+	{% endfor %}
+    </ul>
+  </div>
+  <h3>{{ types.2.text }}</h3>
+  <div class='accordion-carpets'>
+    <ul class="nav nav-pills nav-stacked">
+    {% for phpci in phpc%}
+		<li><a href="{{ phpci.link }}" target="_blank">{{ phpci.title }}</a></li>
+	{% endfor %}
+    </ul>
+  </div>
+  <h3>{{ types.3.text }}</h3>
+  <div class='accordion-carpets'>
+    <ul class="nav nav-pills nav-stacked">
+    {% for pdai in pda%}
+		<li><a href="{{ pdai.link }}" target="_blank">{{ pdai.title }}</a></li>
+	{% endfor %}
+    </ul>
+  </div>
+  <h3>{{ types.4.text }}</h3>
+  <div class='accordion-carpets'>
+    <ul class="nav nav-pills nav-stacked">
+    {% for pdvmi in pdvm%}
+		<li><a href="{{ pdvmi.link }}" target="_blank">{{ pdvmi.title }}</a></li>
+	{% endfor %}
+    </ul>
+  </div>
+  <h3>{{ types.5.text }}</h3>
+  <div class='accordion-carpets'>
+    <ul class="nav nav-pills nav-stacked">
+    {% for pdati in pdat%}
+		<li><a href="{{ pdati.link }}" target="_blank">{{ pdati.title }}</a></li>
+	{% endfor %}
+    </ul>
+  </div>
+  <h3>{{ types.6.text }}</h3>
+  <div class='accordion-carpets'>
+    <ul class="nav nav-pills nav-stacked">
+    {% for pdmi in pdm%}
+		<li><a href="{{ pdmi.link }}" target="_blank">{{ pdmi.title }}</a></li>
+	{% endfor %}
+    </ul>
+  </div>
+  <h3>{{ types.7.text }}</h3>
+  <div class='accordion-carpets'>
+    <ul class="nav nav-pills nav-stacked">
+    {% for pdlyli in pdlyl%}
+		<li><a href="{{ pdlyli.link }}" target="_blank">{{ pdlyli.title }}</a></li>
+	{% endfor %}
+    </ul>
+  </div>
+  <h3>{{ types.8.text }}</h3>
+  <div class='accordion-carpets'>
+    <ul class="nav nav-pills nav-stacked">
+    {% for pdpi in pdp%}
+		<li><a href="{{ pdpi.link }}" target="_blank">{{ pdpi.title }}</a></li>
+	{% endfor %}
+    </ul>
+  </div>
+  <h3>{{ types.9.text }}</h3>
+  <div class='accordion-carpets'>
+    <ul class="nav nav-pills nav-stacked">
+    {% for ppi in pp%}
+		<li><a href="{{ ppi.link }}" target="_blank">{{ ppi.title }}</a></li>
+	{% endfor %}
+    </ul>
+  </div>
+  <h3>{{ types.10.text }}</h3>
+  <div class='accordion-carpets'>
+    <ul class="nav nav-pills nav-stacked">
+    {% for pdeddi in pdedd%}
+		<li><a href="{{ pdeddi.link }}" target="_blank">{{ pdeddi.title }}</a></li>
+	{% endfor %}
+    </ul>
+  </div>
+  <h3>{{ types.11.text }}</h3>
+  <div class='accordion-carpets'>
+    <ul class="nav nav-pills nav-stacked">
+    {% for pni in pn%}
+		<li><a href="{{ pni.link }}" target="_blank">{{ pni.title }}</a></li>
+	{% endfor %}
+    </ul>
+  </div>
+  <h3>{{ types.12.text }}</h3>
+  <div class='accordion-carpets'>
+    <ul class="nav nav-pills nav-stacked">
+    {% for iyhdei in iyhde%}
+		<li><a href="{{ iyhdei.link }}" target="_blank">{{ iyhdei.title }}</a></li>
+	{% endfor %}
+    </ul>
+  </div>
+  <h3>{{ types.13.text }}</h3>
+  <div class='accordion-carpets'>
+    <ul class="nav nav-pills nav-stacked">
+    {% for idapi in idap%}
+		<li><a href="{{ idapi.link }}" target="_blank">{{ idapi.title }}</a></li>
+	{% endfor %}
+    </ul>
+  </div>  
+</div>
+<script src="{% static 'scripts/jquery.js' %}"></script>
+<script src="{% static 'scripts/jquery-ui.js' %}"></script>
+<script>
+	$( "#accordion" ).accordion();
+</script>
+{% endif %}	
+{% endblock %}
+
+{% block scripts %} 
+{% endblock %}

@@ -1,0 +1,69 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block contenido%}
+<div class="container">
+	<div class="row">
+	<div class="col-md-8 col-md-offset-2">
+	<div class="well bs-component">
+		<form method="post" class="form-horizontal" action="{% url 'healthRecord:record' r=identifier_record r_id=id_record %}">
+			{% csrf_token %}
+			<fieldset>
+				<legend>Expediente: {{id_record}}</legend>
+				{% if not mensaje == "" %}
+					<div class="alert alert-dismissible alert-success">
+					  <button type="button" class="close" data-dismiss="alert">&times;</button>
+					  <strong>{{mensaje}}</strong>
+					</div>
+				{% endif %}
+				{% for field in record_form %}
+					{% if field.name == 'professor' %}
+						{% if user.groups.all.0.name == 'Administrador' %}
+							<div class="form-group" id="{{ field.name }}">
+								<label class="col-xs-4 control-label"> Catedrático </label>
+							
+								<div class="col-xs-8">
+									{% for error in field.errors %}
+										{{error}}
+									{% endfor %}
+									{{field}}
+								</div>
+							</div>
+						{% else %}
+							{{field.as_hidden}}
+						{% endif %}
+					{% else %}
+					<div class="form-group" id="{{ field.name }}">
+						<label class="col-xs-4 control-label">
+						{% if field.name == 'record_type' %}
+							Tipo de Expediente:
+						{% elif field.name == 'student' %}
+							Estudiante:
+						{% elif field.name == 'professor' %}
+							Catedrático:
+						{% elif field.name == 'record_date' %}
+							Fecha:
+						{% endif %}
+						</label>
+						<div class="col-xs-8">
+							{% for error in field.errors %}
+								{{error}}
+							{% endfor %}
+							{{field}}
+						</div>
+					</div>
+					{% endif %}
+				{% endfor %}
+				<div class="form-group">
+					<div class="col-md-4 col-md-offset-4">
+						<a class="btn btn-default" href={% url 'healthRecord:record_dashboard'%}>Cancelar</a>
+						<input class="btn btn-primary" type="submit" value="Guardar" />
+					</div>
+				</div>
+			</fieldset>
+			
+		</form>
+	</div>
+	</div>
+	</div>
+</div>
+{% endblock %}

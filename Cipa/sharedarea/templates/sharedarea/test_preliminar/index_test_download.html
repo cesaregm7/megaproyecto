@@ -1,0 +1,24 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block contenido%}
+	<div class="container-fluid">
+		<div class="text-center">
+			<h2>Descargar resultados de tests educativos</h2>
+		</div>
+		<div class="well col-md-8 col-md-offset-2">
+			<div class="row text-center">
+					<p >A continuación se puede descargar los resultados de todos los tests del área educativa. El formato en que se obtendran es CSV, un tipo de archivo que se puede abrir en Excel.</p>	
+
+			</div>
+			<div class="row text-center">
+				<form name="access_formulario" method="post" action="{% url 'testarea:descargar_test' %}">
+					{% csrf_token %}	
+					<input class="btn btn-primary" type="submit" value="Descargar"/>
+				</form>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
+

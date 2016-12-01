@@ -1,0 +1,902 @@
+{% extends 'index.html' %}
+{% load static %}
+
+
+{% block head %}
+	<link rel="stylesheet" media="all" type="text/css" href="{% static 'styles/jquery-ui.css' %}" > 
+{% endblock %}
+
+{% block contenido%} 
+{% if user.is_authenticated%}
+<script type="text/javascript">
+	
+	// Your Client ID can be retrieved from your project in the Google
+	// Developer Console, https://console.developers.google.com
+	var CLIENT_ID = '570308242338-f41mo3cap7n170a0bn4gqdb9a5sdkct0.apps.googleusercontent.com';
+	var bandera = false;
+	var SCOPES = ["https://www.googleapis.com/auth/calendar"];
+
+	/**
+	* Check if current user has authorized this application.
+	*/
+	function checkAuth() {
+		gapi.auth.authorize(
+		{
+			'client_id': CLIENT_ID,
+			'scope': SCOPES.join(' '),
+			'immediate': true
+		}, handleAuthResult);
+	}
+
+	/**
+	* Handle response from authorization server.
+	*
+	* @param {Object} authResult Authorization result.
+	*/
+	function handleAuthResult(authResult) {
+		var authorizeDiv = document.getElementById('authorize-div');
+		if (authResult && !authResult.error) {
+			loadCalendarApi();
+			console.log('si');
+			bandera = true;
+		} else {
+			console.log('no');
+		}
+	}
+
+	/**
+	* Initiate auth flow in response to user clicking authorize button.
+	*
+	* @param {Event} event Button click event.
+	*/
+	function handleAuthClick(event) {
+		gapi.auth.authorize(
+		{
+			'client_id': CLIENT_ID, 
+			'scope': SCOPES.join(' '), 
+			'immediate': bandera
+		}, handleAuthResult);
+	}
+
+	/**
+	* Load Google Calendar client library. List upcoming events
+	* once client library is loaded.
+	*/
+	function loadCalendarApi() {
+		gapi.client.load('calendar', 'v3');
+	}
+
+	/**
+	* Print the summary and start datetime/date of the next ten events in
+	* the authorized user's calendar. If no events are found an
+	* appropriate message is printed.
+	*/
+	function insertEvent(user_email) {
+		var summary = jQuery("#inputTitulo").val();
+		var description = jQuery("#textArea").val();
+		var location = jQuery("#lugar option:selected").text();
+		var date = jQuery("#inputDia").val();
+		var start = date+'T'+jQuery("#hora-inicial option:selected").text()+':'+jQuery("#minutos-inicial option:selected").text()+":00-06:00";
+		var end = date+'T'+jQuery("#hora-final option:selected").text()+':'+jQuery("#minutos-final option:selected").text()+":00-06:00";
+		
+		var banderaValidator = true;
+		
+		if (summary){
+			var str1 = "";
+			var n = str1.localeCompare(summary);
+			if (n==0){
+				banderaValidator = false;
+			}
+		}
+		else{
+			banderaValidator = false;
+		}
+		
+		if (description){
+			var str1 = "";
+			var n = str1.localeCompare(description);
+			if (n==0){
+				banderaValidator = false;
+			}
+		}
+		else{
+			banderaValidator = false;
+		}
+		
+		if (date){
+			var str1 = "";
+			var n = str1.localeCompare(date);
+			if (n==0){
+				banderaValidator = false;
+			}
+		}
+		else{
+			banderaValidator = false;
+		}
+		
+		var dateStart = new Date(start);
+		var endStart = new Date(end);
+		
+		if (endStart <= dateStart){
+			banderaValidator = false;
+			alert('Verifique que la hora a la que inicie la cita sea antes que la hora de finalización.');
+		}
+		console.log(user_email)
+		if (banderaValidator){
+			var event = {
+				'summary': summary,
+				'location': location,
+				'description': description,
+				'start': {
+					'dateTime': start,
+				},
+				'end': {
+					'dateTime': end,
+				},
+				'attendees': [
+					{'email': user_email},
+					{'email': 'gue12593@uvg.edu.gt'}
+				  ],
+				'reminders': {
+					'useDefault': false,
+					'overrides': [
+						{'method': 'email', 'minutes': 24 * 60},
+						{'method': 'popup', 'minutes': 10}
+					]
+				}
+			};
+		
+			var request = gapi.client.calendar.events.insert({
+				'calendarId': 'gue12593@uvg.edu.gt',
+				'resource': event
+			});
+
+			request.execute(function(event) {
+				window.location = "http://52.55.107.184/calendario/";
+			});
+		}
+	}
+	
+	function saveEdit(user_email){
+		var eventid = ''+jQuery("#eventidEdit").val();
+		
+		var summary = jQuery("#inputTituloEdit").val();
+		var description = jQuery("#textAreaEdit").val();
+		var location = jQuery("#lugarEdit option:selected").text();
+		var date = jQuery("#inputDiaEdit").val();
+		var start = date+'T'+jQuery("#hora-inicialEdit option:selected").text()+':'+jQuery("#minutos-inicialEdit option:selected").text()+":00-06:00";
+		var end = date+'T'+jQuery("#hora-finalEdit option:selected").text()+':'+jQuery("#minutos-finalEdit option:selected").text()+":00-06:00";
+		
+		var banderaValidator = true;
+		
+		if (summary){
+			var str1 = "";
+			var n = str1.localeCompare(summary);
+			if (n==0){
+				banderaValidator = false;
+			}
+		}
+		else{
+			banderaValidator = false;
+		}
+		
+		if (description){
+			var str1 = "";
+			var n = str1.localeCompare(description);
+			if (n==0){
+				banderaValidator = false;
+			}
+		}
+		else{
+			banderaValidator = false;
+		}
+		
+		if (date){
+			var str1 = "";
+			var n = str1.localeCompare(date);
+			if (n==0){
+				banderaValidator = false;
+			}
+		}
+		else{
+			banderaValidator = false;
+		}
+		
+		var dateStart = new Date(start);
+		var endStart = new Date(end);
+		
+		if (endStart <= dateStart){
+			banderaValidator = false;
+			alert('Verifique que la hora a la que inicie la cita sea antes que la hora de finalización.');
+		}
+		if (banderaValidator){	
+			var event = {
+				'summary': summary,
+				'location': location,
+				'description': description,
+				'start': {
+					'dateTime': start,
+				},
+				'end': {
+					'dateTime': end,
+				},
+				'attendees': [
+					{'email': user_email}
+				],
+				'reminders': {
+					'useDefault': false,
+					'overrides': [
+						{'method': 'email', 'minutes': 24 * 60},
+						{'method': 'popup', 'minutes': 10}
+					]
+				}
+			};	
+			var request = gapi.client.calendar.events.update({
+				'calendarId': 'gue12593@uvg.edu.gt',
+				'eventId': eventid,
+				'resource': event
+			});
+			request.execute(function(event) {
+				window.location = "http://52.55.107.184/calendario/";
+			});
+		}
+	}
+	
+	function deleteEvent(eventId) {
+	
+		var request = gapi.client.calendar.events.delete({
+			'calendarId': 'gue12593@uvg.edu.gt',
+			'eventId': eventId
+		});
+
+		request.execute(function(err) {
+			if (!err) {
+				alert('No se logró borrar la cita');
+			return;
+			}
+			/*alert('Si se logró borrar la cita');*/
+			window.location = "http://52.55.107.184/calendario/";
+		});
+    }
+    
+    function getEvent(eventId) {
+		
+		var request = gapi.client.calendar.events.get({
+			'calendarId': 'gue12593@uvg.edu.gt',
+			'eventId': eventId
+		});
+
+		request.execute(function(event) {
+			if (!event) {
+				console.log('The API returned an error: ' + err);
+				return;
+			}
+			console.log(event);
+			jQuery("#eventidEdit").val(event.id);
+			jQuery("#inputTituloEdit").val(event.summary);
+			jQuery("#textAreaEdit").val(event.description);
+			
+			var fechaInicio = new Date(event.start.dateTime)
+			var fechaFin = new Date(event.end.dateTime)
+			
+			var dia = fechaInicio.getDate().toString();
+			dia = dia.length > 1 ? dia : '0' + dia;
+			
+			var mes = (fechaInicio.getMonth()+1).toString();
+			mes = mes.length > 1 ? mes : '0' + mes;
+			
+			var horaInicio = fechaInicio.getHours().toString();
+			horaInicio = horaInicio.length > 1 ? horaInicio : '0' + horaInicio;
+			
+			var minutoInicio = (fechaInicio.getMinutes()).toString();
+			minutoInicio = minutoInicio.length > 1 ? minutoInicio : '0' + minutoInicio;
+			
+			var fechatext = fechaInicio.getFullYear()+'-'+mes+'-'+dia;
+			
+			var horaFin = fechaFin.getHours().toString();
+			horaFin = horaFin.length > 1 ? horaFin : '0' + horaFin;
+			
+			var minutoFin = (fechaFin.getMinutes()).toString();
+			minutoFin = minutoFin.length > 1 ? minutoFin : '0' + minutoFin;
+			
+			jQuery("#inputDiaEdit").val(fechatext);
+			jQuery("#lugarEdit").val(event.location);
+			jQuery("#hora-inicialEdit").val(horaInicio);
+			jQuery("#minutos-inicialEdit").val(minutoInicio);
+			jQuery("#hora-finalEdit").val(horaFin);
+			jQuery("#minutos-finalEdit").val(minutoFin);
+			
+			jQuery('.modal').show();
+		});
+    }
+	
+	function cancelEditEvent(){
+		jQuery('.modal').hide();
+	}
+	
+	function listUpcomingEvents(user_email) {
+		var request = gapi.client.calendar.events.list({
+			'calendarId': 'gue12593@uvg.edu.gt',
+			'timeMin': (new Date()).toISOString(),
+			'showDeleted': false,
+			'singleEvents': true,
+			'maxResults': 250,
+			'orderBy': 'startTime'
+        });
+		
+		jQuery('.rowscitas').remove();
+		request.execute(function(resp) {
+			var events = resp.items;
+			if (events.length > 0) {
+				for (i = 0; i < events.length; i++) {
+					var event = events[i];
+					console.log(event);
+					if (event.attendees){
+						var aux = event.attendees;
+						aux = aux[0].email;
+						if (event.id!='kuu0udij7h76i66hhhj6j3rvv0' && aux.localeCompare(user_email)==0){
+							var when = event.start.dateTime;
+							if (!when) {
+								when = event.start.date;
+							}
+							var fechahora = new Date(event.start.dateTime);
+							
+							var dia = fechahora.getDate().toString();
+							dia = dia.length > 1 ? dia : '0' + dia;
+							
+							var mes = (fechahora.getMonth()+1).toString();
+							mes = mes.length > 1 ? mes : '0' + mes;
+							
+							var hora = fechahora.getHours().toString();
+							hora = hora.length > 1 ? hora : '0' + hora;
+							
+							var minuto = (fechahora.getMinutes()).toString();
+							minuto = minuto.length > 1 ? minuto : '0' + minuto;
+							
+							var fechatext = dia+'-'+mes+'-'+fechahora.getFullYear()+' '+hora+':'+minuto;
+							var listadotexto='<tr class="rowscitas"><td>'+event.summary+'</td><td>'+((event.description)?event.description:'-')+'</td><td>'+fechatext+'</td><td>'+event.location+'</td><td><button class="btn btn-primary" onclick="getEvent(\''+event.id+'\')">Editar</button><button class="btn btn-danger" onclick="handleAuthClick(event); deleteEvent(\''+event.id+'\');">Borrar</button></td></tr>';
+							jQuery('#listado-citas').append(listadotexto);
+						}
+						else{
+							if (events.length==1){
+								jQuery('#listado-citas').append('<tr class="rowscitas"><td>No hay citas calendarizas.</td><td></td><td></td><td></td><td></td></tr>');
+							}
+						}
+					}
+				}
+			} else {
+				jQuery('#listado-citas').append('<tr class="rowscitas"><td>No hay citas calendarizas.</td><td></td><td></td><td></td><td></td></tr>');
+			}
+        });
+	}
+</script>
+<script src="https://apis.google.com/js/client.js?onload=checkAuth"></script>
+<div class="container">
+	<div class="row">
+		<div class="col-lg-6 col-lg-offset-4 col-xs-8 col-xs-offset-2">
+			<h2>Calendario de citas</h2>
+		</div>
+	</div>
+	<br>
+	<div class="row">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="#calendario" data-toggle="tab" aria-expanded="true">Calendario</a></li>
+			<li class=""><a href="#agregar" data-toggle="tab" aria-expanded="false">Agregar cita</a></li>
+			<li class=""><a href="#editar-borrar" data-toggle="tab" aria-expanded="false" onclick='handleAuthClick(event); listUpcomingEvents("{{ user.email }}");'>Editar calendario</a></li>
+		</ul>
+		<div id="myTabContent" class="tab-content">
+			<div class="tab-pane fade active in" id="calendario">
+				<iframe src="https://calendar.google.com/calendar/embed?src=gue12593%40uvg.edu.gt&ctz=America/Guatemala&mode=day" width='100%' height="600" frameborder="0" scrolling="no"></iframe>
+			</div>
+			<div class="tab-pane fade" id="agregar">
+				<div class='well'>
+				<div class='row'>
+					
+					<div class='col-lg-6 col-lg-offset-3 col-xs-8 col-xs-offset-2'>
+						<div class="form-horizontal">
+						  <fieldset>
+							<legend>Agregar cita</legend>
+							<div class="form-group">
+							  <label for="inputTitulo" class="col-lg-2 col-xs-2 control-label">ID</label>
+							  <div class="col-lg-10">
+								<input type="text" class="form-control" id="inputTitulo">
+							  </div>
+							  <p class="col-lg-10 col-lg-offset-2 text-muted">Colocar primera letra del nombre y apellido del paciente, sexo y edad. Ej: Francisco Diaz, Masculino, 20 años = F.D.M.20.</p>
+							</div>
+							<div class="form-group">
+							  <label for="textArea" class="col-lg-2 col-xs-2 control-label">Descripción</label>
+							  <div class="col-lg-10">
+								<textarea class="form-control" rows="3" id="textArea"></textarea>
+							  </div>
+							  <p class="col-lg-10 col-lg-offset-2 text-muted">Ej: Nombre del terapeuta o evaluador, servicio a brindar, entre otros.</p>
+							</div>
+							<div class="form-group">
+							  <label for="lugar" class="col-lg-2 col-xs-2 control-label">Lugar</label>
+							  <div class="col-lg-10">
+								<select class="form-control" id="lugar">
+								  <option value='Clínica 1 - Taller, Terapia Familiar, Grupal, de Pareja o Entrevista Inicial'>Clínica 1 - Taller, Terapia Familiar, Grupal, de Pareja o Entrevista Inicial</option>
+								  <option value='Clínica 2 - Terapia individual o Evaluación'>Clínica 2 - Terapia individual o Evaluación</option>
+								  <option value='Clínica 3 - Terapia individual o Evaluación'>Clínica 3 - Terapia individual o Evaluación</option>
+								  <option value='Clínica 4 - Terapia de Juego o Terapia Familiar'>Clínica 4 - Terapia de Juego o Terapia Familiar</option>
+								</select>
+							  </div>
+							</div>
+							<div class="form-group">
+							  <label for="inputDia" class="col-lg-2 col-xs-2 control-label">Día</label>
+							  <div class="col-lg-10">
+								<input type="text" class="form-control date_picker" id="inputDia">
+							  </div>
+							</div>
+							<div class='form-group'>
+								<label for="hora-inicial" class="col-lg-2 control-label">Hora inicial</label>
+								  <div class="col-lg-8">
+									<select class="form-control" style="width: auto; display: inline-block;" id="hora-inicial">
+									  <option value='00'>00</option>
+									  <option value='01'>01</option>
+									  <option value='02'>02</option>
+									  <option value='03'>03</option>
+									  <option value='04'>04</option>
+									  <option value='05'>05</option>
+									  <option value='06'>06</option>
+									  <option value='07'>07</option>
+									  <option value='08'>08</option>
+									  <option value='09'>09</option>
+									  <option value='10'>10</option>
+									  <option value='11'>11</option>
+									  <option value='12'>12</option>
+									  <option value='13'>13</option>
+									  <option value='14'>14</option>
+									  <option value='15'>15</option>
+									  <option value='16'>16</option>
+									  <option value='17'>17</option>
+									  <option value='18'>18</option>
+									  <option value='19'>19</option>
+									  <option value='20'>20</option>
+									  <option value='21'>21</option>
+									  <option value='22'>22</option>
+									  <option value='23'>23</option>
+									</select>
+									<select class="form-control" style="width: auto; display: inline-block;" id="minutos-inicial">
+									  <option value='00'>00</option>
+									  <option value='01'>01</option>
+									  <option value='02'>02</option>
+									  <option value='03'>03</option>
+									  <option value='04'>04</option>
+									  <option value='05'>05</option>
+									  <option value='06'>06</option>
+									  <option value='07'>07</option>
+									  <option value='08'>08</option>
+									  <option value='09'>09</option>
+									  <option value='10'>10</option>
+									  <option value='11'>11</option>
+									  <option value='12'>12</option>
+									  <option value='13'>13</option>
+									  <option value='14'>14</option>
+									  <option value='15'>15</option>
+									  <option value='16'>16</option>
+									  <option value='17'>17</option>
+									  <option value='18'>18</option>
+									  <option value='19'>19</option>
+									  <option value='20'>20</option>
+									  <option value='21'>21</option>
+									  <option value='22'>22</option>
+									  <option value='23'>23</option>
+									  <option value='24'>24</option>
+									  <option value='25'>25</option>
+									  <option value='26'>26</option>
+									  <option value='27'>27</option>
+									  <option value='28'>28</option>
+									  <option value='29'>29</option>
+									  <option value='30'>30</option>
+									  <option value='31'>31</option>
+									  <option value='32'>32</option>
+									  <option value='33'>33</option>
+									  <option value='34'>34</option>
+									  <option value='35'>35</option>
+									  <option value='36'>36</option>
+									  <option value='37'>37</option>
+									  <option value='38'>38</option>
+									  <option value='39'>39</option>
+									  <option value='40'>40</option>
+									  <option value='41'>41</option>
+									  <option value='42'>42</option>
+									  <option value='43'>43</option>
+									  <option value='44'>44</option>
+									  <option value='45'>45</option>
+									  <option value='46'>46</option>
+									  <option value='47'>47</option>
+									  <option value='48'>48</option>
+									  <option value='49'>49</option>
+									  <option value='50'>50</option>
+									  <option value='51'>51</option>
+									  <option value='52'>52</option>
+									  <option value='53'>53</option>
+									  <option value='54'>54</option>
+									  <option value='55'>55</option>
+									  <option value='56'>56</option>
+									  <option value='57'>57</option>
+									  <option value='58'>58</option>
+									  <option value='59'>59</option>
+									</select>
+								  </div>
+							</div>
+							<div class='form-group'>
+								<label for="hora-final" class="col-lg-2 control-label">Hora final</label>
+								  <div class="col-lg-8">
+									<select class="form-control" style="width: auto; display: inline-block;" id="hora-final">
+									  <option value='00'>00</option>
+									  <option value='01'>01</option>
+									  <option value='02'>02</option>
+									  <option value='03'>03</option>
+									  <option value='04'>04</option>
+									  <option value='05'>05</option>
+									  <option value='06'>06</option>
+									  <option value='07'>07</option>
+									  <option value='08'>08</option>
+									  <option value='09'>09</option>
+									  <option value='10'>10</option>
+									  <option value='11'>11</option>
+									  <option value='12'>12</option>
+									  <option value='13'>13</option>
+									  <option value='14'>14</option>
+									  <option value='15'>15</option>
+									  <option value='16'>16</option>
+									  <option value='17'>17</option>
+									  <option value='18'>18</option>
+									  <option value='19'>19</option>
+									  <option value='20'>20</option>
+									  <option value='21'>21</option>
+									  <option value='22'>22</option>
+									  <option value='23'>23</option>
+									</select>
+									<select class="form-control" style="width: auto; display: inline-block;" id="minutos-final">
+									  <option value='00'>00</option>
+									  <option value='01'>01</option>
+									  <option value='02'>02</option>
+									  <option value='03'>03</option>
+									  <option value='04'>04</option>
+									  <option value='05'>05</option>
+									  <option value='06'>06</option>
+									  <option value='07'>07</option>
+									  <option value='08'>08</option>
+									  <option value='09'>09</option>
+									  <option value='10'>10</option>
+									  <option value='11'>11</option>
+									  <option value='12'>12</option>
+									  <option value='13'>13</option>
+									  <option value='14'>14</option>
+									  <option value='15'>15</option>
+									  <option value='16'>16</option>
+									  <option value='17'>17</option>
+									  <option value='18'>18</option>
+									  <option value='19'>19</option>
+									  <option value='20'>20</option>
+									  <option value='21'>21</option>
+									  <option value='22'>22</option>
+									  <option value='23'>23</option>
+									  <option value='24'>24</option>
+									  <option value='25'>25</option>
+									  <option value='26'>26</option>
+									  <option value='27'>27</option>
+									  <option value='28'>28</option>
+									  <option value='29'>29</option>
+									  <option value='30'>30</option>
+									  <option value='31'>31</option>
+									  <option value='32'>32</option>
+									  <option value='33'>33</option>
+									  <option value='34'>34</option>
+									  <option value='35'>35</option>
+									  <option value='36'>36</option>
+									  <option value='37'>37</option>
+									  <option value='38'>38</option>
+									  <option value='39'>39</option>
+									  <option value='40'>40</option>
+									  <option value='41'>41</option>
+									  <option value='42'>42</option>
+									  <option value='43'>43</option>
+									  <option value='44'>44</option>
+									  <option value='45'>45</option>
+									  <option value='46'>46</option>
+									  <option value='47'>47</option>
+									  <option value='48'>48</option>
+									  <option value='49'>49</option>
+									  <option value='50'>50</option>
+									  <option value='51'>51</option>
+									  <option value='52'>52</option>
+									  <option value='53'>53</option>
+									  <option value='54'>54</option>
+									  <option value='55'>55</option>
+									  <option value='56'>56</option>
+									  <option value='57'>57</option>
+									  <option value='58'>58</option>
+									  <option value='59'>59</option>
+									</select>
+								  </div>
+							</div>
+							<div class="form-group">
+							  <div class="col-lg-10 col-lg-offset-2 col-xs-10">
+								<div id="authorize-div">
+									<button id="authorize-button" class="btn btn-primary" onclick="handleAuthClick(event); insertEvent('{{user.email}}');">Agregar</button>
+								</div>
+							  </div>
+							</div>
+						  </fieldset>
+						</div>
+					</div>
+					</div>
+				</div>
+			</div>
+			<div class="tab-pane fade" id="editar-borrar">
+				<table class="table table-striped table-hover custom-induccion-table">
+					<thead>
+						<tr>
+							<th>Titulo</th>
+							<th>Descripcion</th>
+							<th class='hidden-phone'>Fecha y hora</th>
+							<th>Clinica</th>
+							<th>Acciones</th>
+						</tr>
+					</thead>
+					<tbody id='listado-citas'>
+					
+					</tbody>
+				</table> 
+				<div class="modal">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="cancelEditEvent()">&times;</button>
+								<h4 class="modal-title">Editar cita</h4>
+							</div>
+							<div class="modal-body">
+								<div class='row'>
+					<div class='col-lg-10 col-lg-offset-1 col-xs-10 col-xs-offset-1'>
+						<div class="form-horizontal">
+						  <fieldset>
+							<div class="form-group">
+							  <label for="inputTitulo" class="col-lg-3 col-xs-3 control-label">ID</label>
+							  <div class="col-lg-9">
+								<input type="text" class="form-control" id="inputTituloEdit">
+							  </div>
+							  <p class="col-lg-9 col-lg-offset-3 text-muted">Colocar primera letra del nombre y apellido del paciente, sexo y edad. Ej: Francisco Diaz, Masculino, 20 años = F.D.M.20.</p>
+							</div>
+							<div class="form-group">
+							  <label for="textArea" class="col-lg-3 col-xs-3 control-label">Descripción</label>
+							  <div class="col-lg-9">
+								<textarea class="form-control" rows="3" id="textAreaEdit"></textarea>
+							  </div>
+							  <p class="col-lg-9 col-lg-offset-3 text-muted">Ej: Nombre del terapeuta o evaluador, servicio a brindar, entre otros.</p>
+							</div>
+							<div class="form-group">
+							  <label for="lugarEdit" class="col-lg-3 col-xs-3 control-label">Lugar</label>
+							  <div class="col-lg-9 col-xs-9">
+								<select class="form-control" id="lugarEdit">
+								  <option value='Clínica 1 - Taller, Terapia Familiar, Grupal, de Pareja o Entrevista Inicial'>Clínica 1 - Taller, Terapia Familiar, Grupal, de Pareja o Entrevista Inicial</option>
+								  <option value='Clínica 2 - Terapia individual o Evaluación'>Clínica 2 - Terapia individual o Evaluación</option>
+								  <option value='Clínica 3 - Terapia individual o Evaluación'>Clínica 3 - Terapia individual o Evaluación</option>
+								  <option value='Clínica 4 - Terapia de Juego o Terapia Familiar'>Clínica 4 - Terapia de Juego o Terapia Familiar</option>
+								</select>
+							  </div>
+							</div>
+							<div class="form-group">
+							  <label for="inputDiaEdit" class="col-lg-3 col-xs-3 control-label">Día</label>
+							  <div class="col-lg-9 col-xs-9">
+								<input type="text" class="form-control date_picker" id="inputDiaEdit">
+							  </div>
+							</div>
+							<div class='form-group'>
+								<label for="hora-inicialEdit" class="col-lg-3 control-label">Hora inicial</label>
+								  <div class="col-lg-8">
+									<select class="form-control" style="width: auto; display: inline-block;" id="hora-inicialEdit">
+									  <option value='00'>00</option>
+									  <option value='01'>01</option>
+									  <option value='02'>02</option>
+									  <option value='03'>03</option>
+									  <option value='04'>04</option>
+									  <option value='05'>05</option>
+									  <option value='06'>06</option>
+									  <option value='07'>07</option>
+									  <option value='08'>08</option>
+									  <option value='09'>09</option>
+									  <option value='10'>10</option>
+									  <option value='11'>11</option>
+									  <option value='12'>12</option>
+									  <option value='13'>13</option>
+									  <option value='14'>14</option>
+									  <option value='15'>15</option>
+									  <option value='16'>16</option>
+									  <option value='17'>17</option>
+									  <option value='18'>18</option>
+									  <option value='19'>19</option>
+									  <option value='20'>20</option>
+									  <option value='21'>21</option>
+									  <option value='22'>22</option>
+									  <option value='23'>23</option>
+									</select>
+									<select class="form-control" style="width: auto; display: inline-block;" id="minutos-inicialEdit">
+									  <option value='00'>00</option>
+									  <option value='01'>01</option>
+									  <option value='02'>02</option>
+									  <option value='03'>03</option>
+									  <option value='04'>04</option>
+									  <option value='05'>05</option>
+									  <option value='06'>06</option>
+									  <option value='07'>07</option>
+									  <option value='08'>08</option>
+									  <option value='09'>09</option>
+									  <option value='10'>10</option>
+									  <option value='11'>11</option>
+									  <option value='12'>12</option>
+									  <option value='13'>13</option>
+									  <option value='14'>14</option>
+									  <option value='15'>15</option>
+									  <option value='16'>16</option>
+									  <option value='17'>17</option>
+									  <option value='18'>18</option>
+									  <option value='19'>19</option>
+									  <option value='20'>20</option>
+									  <option value='21'>21</option>
+									  <option value='22'>22</option>
+									  <option value='23'>23</option>
+									  <option value='24'>24</option>
+									  <option value='25'>25</option>
+									  <option value='26'>26</option>
+									  <option value='27'>27</option>
+									  <option value='28'>28</option>
+									  <option value='29'>29</option>
+									  <option value='30'>30</option>
+									  <option value='31'>31</option>
+									  <option value='32'>32</option>
+									  <option value='33'>33</option>
+									  <option value='34'>34</option>
+									  <option value='35'>35</option>
+									  <option value='36'>36</option>
+									  <option value='37'>37</option>
+									  <option value='38'>38</option>
+									  <option value='39'>39</option>
+									  <option value='40'>40</option>
+									  <option value='41'>41</option>
+									  <option value='42'>42</option>
+									  <option value='43'>43</option>
+									  <option value='44'>44</option>
+									  <option value='45'>45</option>
+									  <option value='46'>46</option>
+									  <option value='47'>47</option>
+									  <option value='48'>48</option>
+									  <option value='49'>49</option>
+									  <option value='50'>50</option>
+									  <option value='51'>51</option>
+									  <option value='52'>52</option>
+									  <option value='53'>53</option>
+									  <option value='54'>54</option>
+									  <option value='55'>55</option>
+									  <option value='56'>56</option>
+									  <option value='57'>57</option>
+									  <option value='58'>58</option>
+									  <option value='59'>59</option>
+									</select>
+								  </div>
+							</div>
+							<div class='form-group'>
+								<label for="hora-finalEdit" class="col-lg-3 control-label">Hora final</label>
+								  <div class="col-lg-8">
+									<select class="form-control" style="width: auto; display: inline-block;" id="hora-finalEdit">
+									  <option value='00'>00</option>
+									  <option value='01'>01</option>
+									  <option value='02'>02</option>
+									  <option value='03'>03</option>
+									  <option value='04'>04</option>
+									  <option value='05'>05</option>
+									  <option value='06'>06</option>
+									  <option value='07'>07</option>
+									  <option value='08'>08</option>
+									  <option value='09'>09</option>
+									  <option value='10'>10</option>
+									  <option value='11'>11</option>
+									  <option value='12'>12</option>
+									  <option value='13'>13</option>
+									  <option value='14'>14</option>
+									  <option value='15'>15</option>
+									  <option value='16'>16</option>
+									  <option value='17'>17</option>
+									  <option value='18'>18</option>
+									  <option value='19'>19</option>
+									  <option value='20'>20</option>
+									  <option value='21'>21</option>
+									  <option value='22'>22</option>
+									  <option value='23'>23</option>
+									</select>
+									<select class="form-control" style="width: auto; display: inline-block;" id="minutos-finalEdit">
+									  <option value='00'>00</option>
+									  <option value='01'>01</option>
+									  <option value='02'>02</option>
+									  <option value='03'>03</option>
+									  <option value='04'>04</option>
+									  <option value='05'>05</option>
+									  <option value='06'>06</option>
+									  <option value='07'>07</option>
+									  <option value='08'>08</option>
+									  <option value='09'>09</option>
+									  <option value='10'>10</option>
+									  <option value='11'>11</option>
+									  <option value='12'>12</option>
+									  <option value='13'>13</option>
+									  <option value='14'>14</option>
+									  <option value='15'>15</option>
+									  <option value='16'>16</option>
+									  <option value='17'>17</option>
+									  <option value='18'>18</option>
+									  <option value='19'>19</option>
+									  <option value='20'>20</option>
+									  <option value='21'>21</option>
+									  <option value='22'>22</option>
+									  <option value='23'>23</option>
+									  <option value='24'>24</option>
+									  <option value='25'>25</option>
+									  <option value='26'>26</option>
+									  <option value='27'>27</option>
+									  <option value='28'>28</option>
+									  <option value='29'>29</option>
+									  <option value='30'>30</option>
+									  <option value='31'>31</option>
+									  <option value='32'>32</option>
+									  <option value='33'>33</option>
+									  <option value='34'>34</option>
+									  <option value='35'>35</option>
+									  <option value='36'>36</option>
+									  <option value='37'>37</option>
+									  <option value='38'>38</option>
+									  <option value='39'>39</option>
+									  <option value='40'>40</option>
+									  <option value='41'>41</option>
+									  <option value='42'>42</option>
+									  <option value='43'>43</option>
+									  <option value='44'>44</option>
+									  <option value='45'>45</option>
+									  <option value='46'>46</option>
+									  <option value='47'>47</option>
+									  <option value='48'>48</option>
+									  <option value='49'>49</option>
+									  <option value='50'>50</option>
+									  <option value='51'>51</option>
+									  <option value='52'>52</option>
+									  <option value='53'>53</option>
+									  <option value='54'>54</option>
+									  <option value='55'>55</option>
+									  <option value='56'>56</option>
+									  <option value='57'>57</option>
+									  <option value='58'>58</option>
+									  <option value='59'>59</option>
+									</select>
+								  </div>
+							</div>
+						  </fieldset>
+						</div>
+					</div>
+				</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-primary" onclick='handleAuthClick(event); saveEdit("{{user.email}}")'>Guardar</button>
+								<input type='hidden' id="eventidEdit">
+								<button type="button" class="btn btn-default" data-dismiss="modal" onclick="cancelEditEvent()">Cancelar</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>	
+</div>
+{% endif %}
+{% endblock %}
+
+{%block scripts%}
+	<script src="{% static 'scripts/jquery-ui.js' %}"></script>
+	<script>
+		$(function() {
+		$( ".date_picker" ).datepicker({
+			dateFormat:"yy-mm-dd"
+		});
+	 });
+	</script>
+{% endblock %}

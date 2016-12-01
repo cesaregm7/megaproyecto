@@ -1,0 +1,185 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block head %}
+		<link rel="stylesheet" media="all" type="text/css" href="{% static 'styles/healthRecord_forms.css' %}" >
+		<link rel="stylesheet" media="all" type="text/css" href="{% static 'styles/jquery-ui.css' %}" > 
+{% endblock %}
+
+{% block contenido%}
+<div class="container">
+	<div class="row">
+	<div class="col-md-8 col-md-offset-2">
+	<div class="well bs-component">
+		<form method="POST" {% if form_displaying.form_type_id_form_type.id_form_type == 10 %}enctype="multipart/form-data"{% endif %} class="form-horizontal" action="{% url 'healthRecord:record_edit' r=identifier_record r_id=id_record f_id=form_displaying.id_form %}"> 
+			{% csrf_token %}
+			<fieldset>
+				<legend id="nombre_formato">{{form_displaying.form_type_id_form_type.name}}</legend>
+				{% for answer,aux_list in answers_tuple%}
+					{% if answer.field_id_field.field_type == 0 %}
+						<div class="form-group">
+							<div class="col-xs-8 col-xs-offset-1">
+								<h3>{{answer.field_id_field.field_name}}:</h4>
+							</div>
+						</div>
+					{% elif answer.field_id_field.field_type == 8 %}
+						<div class="form-group">
+							<div class="col-xs-8 col-xs-offset-1">
+								<h4>{{answer.field_id_field.field_name}}:</h5>
+							</div>
+						</div>
+					{% elif answer.field_id_field.field_type == 10 %}
+						<div class="form-group">
+							<div class="col-xs-8 col-xs-offset-1">
+								<h5>{{answer.field_id_field.field_name}}:</h5>
+							</div>
+						</div>
+					{% elif answer.field_id_field.field_type == 1 %}
+						<div class="form-group">
+							<label class="col-xs-4 control-label">{{answer.field_id_field.field_name}}:</label>
+							<div class="col-xs-8">
+								<input class="form-control" id="{{answer.field_id_field.field_identifier}}" Name ="{{answer.field_id_field.field_identifier}}" placeholder="{{answer.field_id_field.field_placeholder}}" value="{{answer.text_answer}}" type="text">
+							</div>
+						</div>
+					
+					{% elif answer.field_id_field.field_type == 2 %}
+						<div class="form-group">
+							<label class="col-xs-4 control-label">{{answer.field_id_field.field_name}}:</label>
+							<div class="col-xs-8">
+								<input class="form-control" id="{{answer.field_id_field.field_identifier}}" Name ="{{answer.field_id_field.field_identifier}}" placeholder="{{answer.field_id_field.field_placeholder}}" value="{{answer.int_answer}}"  type="number">
+							</div>
+						</div>
+					{% elif answer.field_id_field.field_type == 4 %}
+						<div class="form-group">
+							<label class="col-xs-4 control-label">{{answer.field_id_field.field_name}}:</label>
+							<div class="col-xs-8">
+								<input class="form-control date_picker" id="{{answer.field_id_field.field_identifier}}" Name ="{{answer.field_id_field.field_identifier}}" placeholder="{{answer.field_id_field.field_placeholder}}" value="{{answer.date_answer|date:'d/m/Y'}}" type="text">
+							</div>
+						</div>
+					{% elif answer.field_id_field.field_type == 5 %}
+						<div class="form-group">
+							<label class="col-xs-4 control-label">{{answer.field_id_field.field_name}}:</label>
+							<div class="col-xs-8">
+								<select class="form-control" id="{{answer.field_id_field.field_identifier}}" Name ="{{answer.field_id_field.field_identifier}}">
+									<option value="{{answer.text_answer}}" disabled selected>{{answer.text_answer}}</option>
+								</select>
+							</div>
+						</div>
+						
+					{% elif answer.field_id_field.field_type == 6 or answer.field_id_field.field_type == 11 %}
+						<div class="form-group">
+							<label class="col-xs-4 control-label">{{answer.field_id_field.field_name}}:</label>
+							<div class="col-xs-8">
+								<textarea class="form-control" rows="6" id="{{answer.field_id_field.field_identifier}}" value="{{answer.text_answer}}" Name ="{{answer.field_id_field.field_identifier}}" placeholder="{{answer.field_id_field.field_placeholder}}">{{answer.text_answer}}</textarea>
+
+							</div>
+						</div>
+						
+					{% elif answer.field_id_field.field_type == 12 %}
+						<div class="form-group">
+							<label class="col-xs-4 control-label">{{answer.field_id_field.field_name}}:</label>
+							<div class="col-xs-8">
+								<input class="control-label" id="{{answer.field_id_field.field_identifier}}" Name ="{{answer.field_id_field.field_identifier}}" type="file">
+
+							</div>
+						</div>	
+						
+					{% elif answer.field_type == 7 or answer.field_type == 9%}
+						
+						<div class="form-group">
+							<div class="form-table-container">
+								<label class="col-xs-8 col-xs-offset-2">{{answer.form_table_name}}</label>
+					
+								<table id="{{answer.form_table_identifier}}" class="table table-striped table-hover ">
+										<thead>
+											<tr>
+												{% if answer.field_type == 7 %}
+													<th id="{{answer.form_table_identifier}}_text_space"></th>
+												{% elif answer.field_type == 9 %}
+													<input type="hidden" id="filas_{{answer.form_table_identifier}}" name="filas_{{answer.form_table_identifier}}" value="{{ aux_list|length }}">
+												{% endif %}
+												{% for column in answer.column_list %}
+													{% if column %}
+														<th>{{column}}</th>
+													{% endif %}
+												{% endfor%}
+										
+											</tr>
+										</thead>
+										<tbody>
+										{% if aux_list %}
+											{% for i in aux_list %}
+												<tr>
+													{% if answer.field_type == 7 %}
+														<td id="{{answer.form_table_identifier}}_first_col_{{forloop.counter}}"></td>
+													{% endif %}
+													{% if answer.number_columns >= 1 %}
+													<td>
+														<input name="{{answer.form_table_identifier}}_col_{{forloop.counter}}_1" type="text" class="form-control" value="{{i.answer_col_1}}"/>
+													</td>
+													{% endif %}
+													{% if answer.number_columns >= 2 %}
+													<td>
+														<input name="{{answer.form_table_identifier}}_col_{{forloop.counter}}_2" type="text" class="form-control" value="{{i.answer_col_2}}"/>
+													</td>
+													{% endif %}
+													{% if answer.number_columns >= 3 %}
+													<td>
+														<input name="{{answer.form_table_identifier}}_col_{{forloop.counter}}_3" type="text" class="form-control" value="{{i.answer_col_3}}"/>
+													</td>
+													{% endif %}
+													{% if answer.number_columns >= 4 %}
+													<td>
+														<input name="{{answer.form_table_identifier}}_col_{{forloop.counter}}_4" type="text" class="form-control" value="{{i.answer_col_4}}"/>
+													</td>
+													{% endif %}
+													{% if answer.number_columns >= 5 %}
+													<td>
+														<input name="{{answer.form_table_identifier}}_col_{{forloop.counter}}_5" type="text" class="form-control" value="{{i.answer_col_5}}"/>
+													</td>
+													{% endif %}
+													{% if answer.number_columns >= 6 %}
+													<td>
+														<input name="{{answer.form_table_identifier}}_col_{{forloop.counter}}_6" type="text" class="form-control" value="{{i.answer_col_6}}"/>
+													</td>
+													{% endif %}
+													{% if answer.number_columns >= 7 %}
+													<td>
+														<input name="{{answer.form_table_identifier}}_col_{{forloop.counter}}_7" type="text" class="form-control" value="{{i.answer_col_7}}"/>
+													</td>
+													{% endif %}
+												</tr>
+											{% endfor %}
+										{%endif%}
+										</tbody>
+								</table>
+							</div>
+								
+						</div>					
+					{% endif %}
+				{% endfor %}
+				<div class="form-group">
+					<div class="col-md-4 col-md-offset-4">
+						<a class="btn btn-default" href={% url 'healthRecord:url_record_view' r=identifier_record r_id=id_record f_id=form_displaying.id_form%}>Cancelar</a>
+						<button type="submit" class="btn btn-primary">Guardar</button>
+					</div>
+				</div>
+				
+			</fieldset>
+			
+		</form>
+		
+    </div>
+	</div>
+	</div>
+</div>	
+	
+{% endblock %}
+
+{% block scripts %}
+	<script src="{% static 'scripts/jquery-ui.js' %}"></script>
+	<script src="{% static 'scripts/form_dropdown.js' %}"></script>
+    <script src="{% static 'scripts/form_utilities.js' %}"></script>
+    <script src="{% static 'scripts/form_tables.js' %}"></script>
+    <script src="{% static 'scripts/form_tables_2.js' %}"></script>
+{% endblock %}

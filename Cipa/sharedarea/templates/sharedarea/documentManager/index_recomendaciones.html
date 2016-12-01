@@ -1,0 +1,35 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block contenido%} 
+{% if user.is_authenticated%}
+<!-- Accordion -->
+<link href="{% static 'styles/jquery-ui.css' %}" rel="stylesheet">
+
+
+<div id="acordion" class="jumbotron" >
+	<br>
+	<h2>Recomendaciones</h2>
+		<div id="accordion">
+		{% for test in recom_list %}
+			<h3>{{test.0.name}}</h3>
+			<div>
+				<ul class="nav nav-pills nav-stacked">
+					{% for recom in test.1 %}
+						<li class="well well-sm">{{recom.text}}</li>
+					{% endfor %}
+				</ul>
+			</div>
+		{% endfor %}
+		</div>
+</div>
+<script src="{% static 'scripts/jquery.js' %}"></script>
+<script src="{% static 'scripts/jquery-ui.js' %}"></script>
+<script>
+	$( "#accordion" ).accordion({
+		collapsible: true,
+		active: {% if preselect < 0 %} true {% else %} {{preselect}} {% endif %}
+	});
+</script>
+{% endif %}
+{% endblock %}
